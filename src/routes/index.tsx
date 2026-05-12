@@ -1,26 +1,38 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Hero } from "@/components/site/Hero";
+import { About } from "@/components/site/About";
+import { Products } from "@/components/site/Products";
+import { Benefits } from "@/components/site/Benefits";
+import { Applications } from "@/components/site/Applications";
+import { Sustainability } from "@/components/site/Sustainability";
+import { Gallery } from "@/components/site/Gallery";
+import { Testimonials } from "@/components/site/Testimonials";
+import { FAQ } from "@/components/site/FAQ";
+import { Contact } from "@/components/site/Contact";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "ALTA FOODS — Eco-Friendly Paper Fruit Cover Bags" },
+      { name: "description", content: "Premium biodegradable paper fruit cover bags for mango, apple, banana, guava and more. Protect harvests naturally with ALTA FOODS." },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
-
 function Index() {
-  return <PlaceholderIndex />;
+  return (
+    <>
+      <Hero />
+      <About />
+      <Products />
+      <Benefits />
+      <Applications />
+      <Sustainability />
+      <Gallery />
+      <Testimonials />
+      <FAQ />
+      <Contact />
+    </>
+  );
 }
