@@ -3,7 +3,7 @@ import { Leaf, Ruler } from "lucide-react";
 import { Reveal, Stagger } from "./Reveal";
 import mango from "@/assets/product-mango.jpg";
 import apple from "@/assets/product-apple.jpg";
-import banana from "@/assets/product-banana.jpg";
+import banana from "@/assets/product-banana.png";
 import guava from "@/assets/product-guava.jpg";
 import pomegranate from "@/assets/product-pomegranate.jpg";
 import custom from "@/assets/product-custom.jpg";
@@ -11,7 +11,7 @@ import custom from "@/assets/product-custom.jpg";
 const products = [
   { img: mango, name: "Mango Paper Cover Bags", features: ["UV resistant", "Breathable kraft", "Insect proof"], sizes: "8×12 / 10×14 / 12×16 in" },
   { img: apple, name: "Apple Protection Bags", features: ["Color enhancement", "Bird & hail proof", "Single-layer"], sizes: "6×8 / 7×9 in" },
-  { img: banana, name: "Banana Fruit Cover Bags", features: ["Dust shield", "Ventilated weave", "Long durability"], sizes: "Up to 36×48 in" },
+  { img: banana, name: "Banana Fruit Cover Bags", features: ["Dust shield", "Breathable paper", "Long durability"], sizes: "Up to 36×48 in" },
   { img: guava, name: "Guava Paper Bags", features: ["Fruit fly barrier", "Soft texture", "Compostable"], sizes: "6×8 / 8×10 in" },
   { img: pomegranate, name: "Pomegranate Covers", features: ["Sun-stress reduction", "Crack prevention", "Natural fiber"], sizes: "6×8 / 7×9 in" },
   { img: custom, name: "Custom Fruit Bags", features: ["Branded prints", "Bespoke sizing", "Bulk orders"], sizes: "Made to order" },

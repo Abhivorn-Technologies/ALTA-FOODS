@@ -1,4 +1,5 @@
-import { MessageCircle, Phone } from "lucide-react";
+import { WhatsAppIcon } from "./WhatsAppIcon";
+import { Phone } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function FloatingActions() {
@@ -12,7 +13,7 @@ export function FloatingActions() {
         aria-label="WhatsApp"
         className="h-14 w-14 grid place-items-center rounded-full bg-[#25D366] text-white shadow-elevated"
       >
-        <MessageCircle className="h-6 w-6" />
+        <WhatsAppIcon className="h-7 w-7" />
         <span className="absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-40 animate-ping" />
       </motion.a>
       <motion.a

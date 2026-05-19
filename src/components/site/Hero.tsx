@@ -6,14 +6,14 @@ import { FloatingLeaves } from "./FloatingLeaves";
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center pt-24 overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-16 overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <img src={hero} alt="Mango orchard with paper cover bags" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-br from-bark/85 via-bark/55 to-primary/40" />
       </div>
       <FloatingLeaves />
 
-      <div className="container-px max-w-7xl mx-auto py-20 grid md:grid-cols-12 gap-10 items-center">
+      <div className="container-px max-w-7xl mx-auto pt-6 pb-20 grid md:grid-cols-12 gap-10 items-center">
         <div className="md:col-span-7 text-primary-foreground">
           <motion.span
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
@@ -89,13 +89,6 @@ export function Hero() {
         </div>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-primary-foreground/80 text-xs flex flex-col items-center gap-2"
-      >
-        <span className="uppercase tracking-[0.3em]">Scroll</span>
-        <span className="block h-10 w-px bg-primary-foreground/40 animate-pulse" />
-      </motion.div>
     </section>
   );
 }

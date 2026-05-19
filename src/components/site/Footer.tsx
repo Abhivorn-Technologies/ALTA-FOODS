@@ -30,7 +30,15 @@ export function Footer() {
           <h4 className="font-semibold text-background mb-4">Quick Links</h4>
           <ul className="space-y-2 text-sm">
             {[["/about","About"],["/products","Products"],["/benefits","Benefits"],["/applications","Applications"],["/sustainability","Sustainability"],["/gallery","Gallery"]].map(([to,label]) => (
-              <li key={to}><Link to={to} className="opacity-80 hover:opacity-100 hover:text-primary-glow transition">{label}</Link></li>
+              <li key={to}>
+                <Link 
+                  to={to} 
+                  onClick={() => window.scrollTo(0, 0)}
+                  className="opacity-80 hover:opacity-100 hover:text-primary-glow transition"
+                >
+                  {label}
+                </Link>
+              </li>
             ))}
           </ul>
         </div>
@@ -55,9 +63,18 @@ export function Footer() {
       </div>
 
       <div className="border-t border-background/10">
-        <div className="container-px max-w-7xl mx-auto py-5 flex flex-col md:flex-row gap-3 items-center justify-between text-xs opacity-70">
-          <span>© {new Date().getFullYear()} ALTA FOODS. All rights reserved.</span>
-          <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="inline-flex items-center gap-2 hover:opacity-100 hover:text-primary-glow">
+        <div className="container-px max-w-7xl mx-auto py-5 flex flex-col md:flex-row gap-3 items-center justify-between text-[10px] md:text-xs opacity-70">
+          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4">
+            <span>© {new Date().getFullYear()} ALTA FOODS. All rights reserved.</span>
+            <span className="hidden md:inline opacity-30">|</span>
+            <span>
+              Developed by{" "}
+              <a href="https://www.abhivorn.com/" target="_blank" rel="noreferrer" className="hover:text-primary-glow transition-colors">
+                Abhivorn Technologies Pvt. Ltd
+              </a>
+            </span>
+          </div>
+          <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="inline-flex items-center gap-2 hover:opacity-100 hover:text-primary-glow transition-all">
             Back to top <ArrowUp className="h-3.5 w-3.5" />
           </button>
         </div>

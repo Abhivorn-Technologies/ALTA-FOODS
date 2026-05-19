@@ -23,20 +23,27 @@ export function Applications() {
           <Reveal><span className="inline-block px-3 py-1 rounded-full text-xs uppercase tracking-[0.2em] bg-accent text-primary font-semibold">Applications</span></Reveal>
           <Reveal delay={0.1}><h2 className="mt-4 text-3xl md:text-5xl font-bold">From small orchards to global exports.</h2></Reveal>
         </div>
-        <div className="mt-12 grid md:grid-cols-3 lg:grid-cols-5 gap-5">
+        <div className="mt-12 flex flex-nowrap gap-4 overflow-x-auto pb-8 scrollbar-hide -mx-4 px-4 lg:grid lg:grid-cols-5 lg:overflow-visible lg:mx-0 lg:px-0">
           {items.map((it, i) => (
             <motion.div
               key={it.t}
-              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.6 }}
-              whileHover={{ y: -8 }}
-              className={`relative aspect-[3/4] rounded-3xl overflow-hidden p-6 flex flex-col justify-end bg-gradient-to-br ${it.c} shadow-elevated`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+              whileHover={{ y: -5 }}
+              className="min-w-[280px] lg:min-w-0 glass rounded-3xl p-6 border-white/5 hover:border-leaf/20 shadow-soft hover:shadow-glow transition-all group flex flex-col justify-between h-full"
             >
-              <div className="absolute inset-0 bg-bark/30" />
-              <div className="relative text-primary-foreground">
-                <div className="text-xs uppercase tracking-[0.25em] opacity-80">0{i + 1}</div>
-                <h3 className="mt-2 text-2xl font-display font-bold">{it.t}</h3>
-                <p className="mt-2 text-sm opacity-90">{it.d}</p>
+              <div>
+                <div className="h-12 w-12 rounded-2xl bg-leaf/10 text-primary grid place-items-center mb-6 group-hover:scale-110 transition-transform">
+                  <span className="text-sm font-bold">0{i + 1}</span>
+                </div>
+                <h3 className="text-xl font-bold leading-tight mb-3">{it.t}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{it.d}</p>
+              </div>
+              
+              <div className="mt-8 pt-6 border-t border-border/50">
+                <div className={`h-1.5 w-full rounded-full bg-gradient-to-r ${it.c} opacity-40`} />
               </div>
             </motion.div>
           ))}

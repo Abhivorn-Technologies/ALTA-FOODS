@@ -136,6 +136,8 @@
   .shadow-elevated { box-shadow: var(--shadow-elevated); }
   .container-px { padding-inline: 1.25rem; }
   @media (min-width: 768px) { .container-px { padding-inline: 2.5rem; } }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 }
 
 @keyframes float {

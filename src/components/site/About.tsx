@@ -1,6 +1,6 @@
 import { Reveal, Stagger } from "./Reveal";
 import { motion } from "framer-motion";
-import about from "@/assets/about.jpg";
+import about from "@/assets/about.png";
 import { Target, Eye, Sprout } from "lucide-react";
 
 export function About() {

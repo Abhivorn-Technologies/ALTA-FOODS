@@ -8,7 +8,7 @@ import { Sustainability } from "@/components/site/Sustainability";
 import { Gallery } from "@/components/site/Gallery";
 import { Testimonials } from "@/components/site/Testimonials";
 import { FAQ } from "@/components/site/FAQ";
-import { Contact } from "@/components/site/Contact";
+import { CTA } from "@/components/site/CTA";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -32,7 +32,7 @@ function Index() {
       <Gallery />
       <Testimonials />
       <FAQ />
-      <Contact />
+      <CTA />
     </>
   );
 }
