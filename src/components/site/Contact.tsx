@@ -1,8 +1,15 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle2, Loader2, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
+import { WhatsAppIcon } from "./WhatsAppIcon";
+import { CheckCircle2, Loader2, Mail, MapPin, Phone, Send } from "lucide-react";
 import { z } from "zod";
 import { Reveal } from "./Reveal";
+import emailjs from "@emailjs/browser";
+
+const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
 
 const schema = z.object({
   name: z.string().trim().min(2, "Enter your name").max(100),
@@ -32,9 +39,13 @@ export function Contact() {
     }
     setState("loading");
     try {
-      // EmailJS hook-up: configure your IDs in env (VITE_EMAILJS_*) and uncomment.
-      // await emailjs.send(SERVICE_ID, TEMPLATE_ID, parsed.data, PUBLIC_KEY);
-      await new Promise((r) => setTimeout(r, 1100));
+      await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+        name: parsed.data.name,
+        email: parsed.data.email,
+        phone: parsed.data.phone,
+        message: parsed.data.message,
+        company: parsed.data.company,
+      }, PUBLIC_KEY);
       setState("success");
       (e.target as HTMLFormElement).reset();
       setTimeout(() => setState("idle"), 4000);
@@ -45,10 +56,10 @@ export function Contact() {
 
   return (
     <section className="py-24">
-      <div className="container-px max-w-7xl mx-auto grid lg:grid-cols-2 gap-10">
+      <div className="container-px max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:items-center">
         <div>
           <Reveal><span className="inline-block px-3 py-1 rounded-full text-xs uppercase tracking-[0.2em] bg-accent text-primary font-semibold">Contact</span></Reveal>
-          <Reveal delay={0.1}><h2 className="mt-4 text-3xl md:text-5xl font-bold leading-tight">Let's grow <span className="text-gradient">better fruit</span> together.</h2></Reveal>
+          <Reveal delay={0.1}><h2 className="mt-4 text-2xl md:text-4xl font-bold leading-tight">Let's grow <span className="text-gradient">better fruit</span> together.</h2></Reveal>
           <Reveal delay={0.2}><p className="mt-4 text-muted-foreground">Tell us about your orchard, target sizes, and quantities. We respond within one business day.</p></Reveal>
 
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
@@ -56,7 +67,7 @@ export function Contact() {
               { icon: Phone, t: "Call", d: "+91 98765 43210" },
               { icon: Mail, t: "Email", d: "hello@altafoods.in" },
               { icon: MapPin, t: "Visit", d: "Industrial Area, Gujarat, India" },
-              { icon: MessageCircle, t: "WhatsApp", d: "Chat with our team" },
+              { icon: WhatsAppIcon, t: "WhatsApp", d: "Chat with our team" },
             ].map(({ icon: Icon, t, d }) => (
               <div key={t} className="glass rounded-2xl p-4 shadow-soft flex gap-3 items-start">
                 <div className="h-10 w-10 grid place-items-center rounded-xl bg-leaf text-primary-foreground"><Icon className="h-4 w-4" /></div>

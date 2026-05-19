@@ -11,7 +11,7 @@ export function PageHeader({ eyebrow, title, subtitle }: { eyebrow: string; titl
           <span className="inline-block px-3 py-1 rounded-full text-xs uppercase tracking-[0.2em] glass text-primary font-semibold">{eyebrow}</span>
         </Reveal>
         <Reveal delay={0.1}>
-          <h1 className="mt-5 text-4xl md:text-6xl font-bold tracking-tight">
+          <h1 className="mt-5 text-3xl md:text-5xl font-bold tracking-tight">
             {title}
           </h1>
         </Reveal>

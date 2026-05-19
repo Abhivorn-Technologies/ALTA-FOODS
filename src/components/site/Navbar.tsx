@@ -31,16 +31,14 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        scrolled ? "py-2" : "py-4"
+      className={`fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-7xl z-50 transition-all duration-300 rounded-2xl md:rounded-full border ${
+        scrolled 
+          ? "bg-background/90 backdrop-blur-lg border-border shadow-elevated py-1" 
+          : "bg-background/40 backdrop-blur-md border-white/10 py-2"
       }`}
     >
-      <div className="container-px max-w-7xl mx-auto">
-        <nav
-          className={`flex items-center justify-between rounded-2xl px-4 md:px-6 py-3 transition-all ${
-            scrolled ? "glass shadow-soft" : "bg-transparent"
-          }`}
-        >
+      <div className="container-px mx-auto">
+        <nav className="flex items-center justify-between transition-all">
           <Link to="/" className="flex items-center gap-2 group">
             <img src={logo} alt="ALTA FOODS logo" className="h-9 w-9 object-contain" />
             <div className="leading-tight">
@@ -55,6 +53,7 @@ export function Navbar() {
                 <Link
                   to={l.to}
                   activeOptions={{ exact: l.to === "/" }}
+                  onClick={() => window.scrollTo(0, 0)}
                   className="relative px-3 py-2 text-sm font-medium text-foreground/80 hover:text-primary transition-colors"
                   activeProps={{ className: "text-primary" }}
                 >
@@ -77,6 +76,7 @@ export function Navbar() {
           <div className="hidden lg:flex">
             <Link
               to="/contact"
+              onClick={() => window.scrollTo(0, 0)}
               className="inline-flex items-center gap-2 rounded-full bg-leaf text-primary-foreground px-5 py-2.5 text-sm font-semibold shadow-soft hover:shadow-glow transition-shadow"
             >
               <Leaf className="h-4 w-4" /> Get a Quote
@@ -106,6 +106,7 @@ export function Navbar() {
                     <Link
                       to={l.to}
                       activeOptions={{ exact: l.to === "/" }}
+                      onClick={() => window.scrollTo(0, 0)}
                       className="block rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-accent"
                       activeProps={{ className: "bg-accent text-primary" }}
                     >
@@ -115,6 +116,7 @@ export function Navbar() {
                 ))}
                 <Link
                   to="/contact"
+                  onClick={() => window.scrollTo(0, 0)}
                   className="mt-2 inline-flex justify-center items-center gap-2 rounded-full bg-leaf text-primary-foreground px-5 py-2.5 text-sm font-semibold"
                 >
                   Get a Quote
