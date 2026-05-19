@@ -1,3 +1,5 @@
+"use client";
+
 import { Reveal, Stagger } from "./Reveal";
 import { motion } from "framer-motion";
 import { Leaf, Award, Globe } from "lucide-react";

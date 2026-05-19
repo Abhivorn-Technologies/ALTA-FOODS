@@ -1,3 +1,5 @@
+"use client";
+
 import { Reveal, Stagger } from "./Reveal";
 import { motion } from "framer-motion";
 import about from "@/assets/about.png";
@@ -10,7 +12,7 @@ export function About() {
         <Reveal>
           <div className="relative">
             <div className="absolute -inset-3 bg-leaf opacity-20 blur-2xl rounded-3xl" />
-            <img src={about} alt="ALTA FOODS team" className="relative rounded-3xl shadow-elevated w-full" loading="lazy" />
+            <img src={typeof about === 'object' ? about.src : about} alt="ALTA FOODS team" className="relative rounded-3xl shadow-elevated w-full" loading="lazy" />
             <motion.div
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               className="absolute -bottom-6 -right-6 glass rounded-2xl p-4 shadow-soft hidden md:block"

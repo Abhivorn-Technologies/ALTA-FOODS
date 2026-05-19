@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
@@ -23,13 +25,13 @@ export function Gallery() {
         <div className="mt-12 columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
           {imgs.map((src, i) => (
             <motion.button
-              key={src}
+              key={typeof src === 'object' ? src.src : src}
               onClick={() => setOpen(src)}
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               transition={{ delay: (i % 6) * 0.05 }}
               className="group mb-4 block w-full overflow-hidden rounded-3xl shadow-soft break-inside-avoid"
             >
-              <img src={src} alt="Gallery" loading="lazy" className="w-full group-hover:scale-110 transition-transform duration-700" />
+              <img src={typeof src === 'object' ? src.src : src} alt="Gallery" loading="lazy" className="w-full group-hover:scale-110 transition-transform duration-700" />
             </motion.button>
           ))}
         </div>
@@ -46,7 +48,7 @@ export function Gallery() {
             </button>
             <motion.img
               initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-              src={open} alt="Preview" className="max-h-[85vh] max-w-[92vw] rounded-2xl shadow-elevated"
+              src={typeof open === 'object' ? open.src : open} alt="Preview" className="max-h-[85vh] max-w-[92vw] rounded-2xl shadow-elevated"
             />
           </motion.div>
         )}

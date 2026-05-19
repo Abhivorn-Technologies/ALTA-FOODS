@@ -1,5 +1,7 @@
+"use client";
+
 import { motion } from "framer-motion";
-import { Link } from "@tanstack/react-router";
+import Link from "next/link";
 import { Leaf, ArrowRight } from "lucide-react";
 import { Reveal } from "./Reveal";
 
@@ -32,15 +34,13 @@ export function CTA() {
         
         <Reveal delay={0.3}>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              to="/contact"
+            <Link href="/contact"
               onClick={() => window.scrollTo(0, 0)}
               className="group inline-flex items-center gap-2 rounded-full bg-leaf text-primary-foreground px-6 py-3 text-base font-bold shadow-glow hover:scale-105 transition-all"
             >
               Request a Custom Quote <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
-            <Link
-              to="/products"
+            <Link href="/products"
               onClick={() => window.scrollTo(0, 0)}
               className="inline-flex items-center gap-2 rounded-full bg-background/10 text-background border border-background/20 px-6 py-3 text-base font-semibold hover:bg-background/20 transition-all"
             >

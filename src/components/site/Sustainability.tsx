@@ -1,4 +1,6 @@
-import sus from "@/assets/sustainability.jpg";
+"use client";
+
+import sus from "@/assets/sustainable-bag.png";
 import { Reveal } from "./Reveal";
 import { motion } from "framer-motion";
 import { Leaf } from "lucide-react";
@@ -31,7 +33,7 @@ export function Sustainability() {
         <Reveal>
           <div className="relative">
             <div className="absolute -inset-4 bg-leaf opacity-20 blur-3xl rounded-3xl" />
-            <img src={sus} alt="Sustainable forest" loading="lazy" className="relative rounded-3xl shadow-elevated w-full" />
+            <img src={typeof sus === 'object' ? sus.src : sus} alt="Compostable paper fruit bag on fertile soil" loading="lazy" className="relative rounded-3xl shadow-elevated w-full aspect-[4/3] object-cover" />
             <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity }} className="absolute top-6 -left-4 glass rounded-2xl p-3 shadow-soft flex items-center gap-2">
               <Leaf className="h-5 w-5 text-primary" /> <span className="text-sm font-semibold">Carbon-conscious</span>
             </motion.div>

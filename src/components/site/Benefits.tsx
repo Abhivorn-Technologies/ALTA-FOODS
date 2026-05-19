@@ -1,3 +1,5 @@
+"use client";
+
 import { Bug, ShieldCheck, Bird, Sparkles, Recycle, Wallet, Palette, CloudSun } from "lucide-react";
 import { motion } from "framer-motion";
 import { Reveal, Stagger } from "./Reveal";

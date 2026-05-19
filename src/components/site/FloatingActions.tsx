@@ -1,3 +1,5 @@
+"use client";
+
 import { WhatsAppIcon } from "./WhatsAppIcon";
 import { Phone } from "lucide-react";
 import { motion } from "framer-motion";

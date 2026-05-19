@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Quote, Star } from "lucide-react";
@@ -40,7 +42,7 @@ export function Testimonials() {
         </div>
         <div className="mt-6 flex justify-center gap-2">
           {items.map((_, k) => (
-            <button key={k} onClick={() => setI(k)} aria-label={`Slide ${k + 1}`} className={`h-2 rounded-full transition-all ${k === i ? "w-8 bg-leaf" : "w-2 bg-muted-foreground/40"}`} />
+            <button suppressHydrationWarning key={k} onClick={() => setI(k)} aria-label={`Slide ${k + 1}`} className={`h-2 rounded-full transition-all ${k === i ? "w-8 bg-leaf" : "w-2 bg-muted-foreground/40"}`} />
           ))}
         </div>
       </div>

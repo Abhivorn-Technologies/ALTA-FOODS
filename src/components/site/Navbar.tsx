@@ -1,5 +1,8 @@
+"use client";
+
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "@tanstack/react-router";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X, Leaf } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "@/assets/logo.png";
@@ -18,7 +21,7 @@ const links = [
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const loc = useLocation();
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -27,20 +30,20 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => { setOpen(false); }, [loc.pathname]);
+  useEffect(() => { setOpen(false); }, [pathname]);
 
   return (
     <header
       className={`fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-7xl z-50 transition-all duration-300 rounded-2xl md:rounded-full border ${
         scrolled 
-          ? "bg-background/90 backdrop-blur-lg border-border shadow-elevated py-1" 
-          : "bg-background/40 backdrop-blur-md border-white/10 py-2"
+          ? "bg-background/95 backdrop-blur-xl border-border shadow-elevated py-1" 
+          : "bg-background/80 backdrop-blur-xl border-white/20 py-2 shadow-soft"
       }`}
     >
       <div className="container-px mx-auto">
         <nav className="flex items-center justify-between transition-all">
-          <Link to="/" className="flex items-center gap-2 group">
-            <img src={logo} alt="ALTA FOODS logo" className="h-9 w-9 object-contain" />
+          <Link href="/" className="flex items-center gap-2 group">
+            <img src={typeof logo === 'object' ? logo.src : logo} alt="ALTA FOODS logo" className="h-9 w-9 object-contain" />
             <div className="leading-tight">
               <div className="font-display font-bold tracking-tight text-foreground">ALTA FOODS</div>
               <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Protecting Fruits Naturally</div>
@@ -48,34 +51,29 @@ export function Navbar() {
           </Link>
 
           <ul className="hidden lg:flex items-center gap-1">
-            {links.map((l) => (
+            {links.map((l) => {
+              const isActive = l.to === "/" ? pathname === "/" : pathname.startsWith(l.to);
+              return (
               <li key={l.to}>
-                <Link
-                  to={l.to}
-                  activeOptions={{ exact: l.to === "/" }}
+                <Link href={l.to}
                   onClick={() => window.scrollTo(0, 0)}
-                  className="relative px-3 py-2 text-sm font-medium text-foreground/80 hover:text-primary transition-colors"
-                  activeProps={{ className: "text-primary" }}
+                  className={`relative px-3 py-2 text-sm font-medium transition-colors ${isActive ? "text-primary" : "text-foreground/80 hover:text-primary"}`}
                 >
-                  {({ isActive }) => (
-                    <>
-                      {l.label}
-                      {isActive && (
-                        <motion.span
-                          layoutId="nav-underline"
-                          className="absolute left-2 right-2 -bottom-0.5 h-0.5 bg-leaf rounded-full"
-                        />
-                      )}
-                    </>
+                  {l.label}
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-underline"
+                      className="absolute left-2 right-2 -bottom-0.5 h-0.5 bg-leaf rounded-full"
+                    />
                   )}
                 </Link>
               </li>
-            ))}
+              );
+            })}
           </ul>
 
           <div className="hidden lg:flex">
-            <Link
-              to="/contact"
+            <Link href="/contact"
               onClick={() => window.scrollTo(0, 0)}
               className="inline-flex items-center gap-2 rounded-full bg-leaf text-primary-foreground px-5 py-2.5 text-sm font-semibold shadow-soft hover:shadow-glow transition-shadow"
             >
@@ -101,21 +99,20 @@ export function Navbar() {
               className="lg:hidden mt-2 glass rounded-2xl p-4"
             >
               <ul className="grid gap-1">
-                {links.map((l) => (
+                {links.map((l) => {
+                  const isActive = l.to === "/" ? pathname === "/" : pathname.startsWith(l.to);
+                  return (
                   <li key={l.to}>
-                    <Link
-                      to={l.to}
-                      activeOptions={{ exact: l.to === "/" }}
+                    <Link href={l.to}
                       onClick={() => window.scrollTo(0, 0)}
-                      className="block rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-accent"
-                      activeProps={{ className: "bg-accent text-primary" }}
+                      className={`block rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-accent ${isActive ? "bg-accent text-primary" : ""}`}
                     >
                       {l.label}
                     </Link>
                   </li>
-                ))}
-                <Link
-                  to="/contact"
+                  );
+                })}
+                <Link href="/contact"
                   onClick={() => window.scrollTo(0, 0)}
                   className="mt-2 inline-flex justify-center items-center gap-2 rounded-full bg-leaf text-primary-foreground px-5 py-2.5 text-sm font-semibold"
                 >

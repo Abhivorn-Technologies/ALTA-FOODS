@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { WhatsAppIcon } from "./WhatsAppIcon";
@@ -6,10 +8,9 @@ import { z } from "zod";
 import { Reveal } from "./Reveal";
 import emailjs from "@emailjs/browser";
 
-const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
+const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "";
+const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "";
+const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Enter your name").max(100),
@@ -103,6 +104,7 @@ export function Contact() {
               {errors.message && <p className="text-xs text-destructive mt-1">{errors.message}</p>}
             </div>
             <motion.button
+              suppressHydrationWarning
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
               disabled={state === "loading" || state === "success"}
               className="mt-6 inline-flex items-center justify-center gap-2 w-full rounded-full bg-leaf text-primary-foreground px-6 py-3.5 font-semibold shadow-glow disabled:opacity-70"
@@ -123,7 +125,7 @@ function Field({ label, name, type = "text", error }: { label: string; name: str
   return (
     <div>
       <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">{label}</label>
-      <input name={name} type={type} className="mt-1.5 w-full rounded-xl bg-background/60 border px-4 py-3 outline-none focus:ring-2 focus:ring-primary" />
+      <input suppressHydrationWarning name={name} type={type} className="mt-1.5 w-full rounded-xl bg-background/60 border px-4 py-3 outline-none focus:ring-2 focus:ring-primary" />
       {error && <p className="text-xs text-destructive mt-1">{error}</p>}
     </div>
   );
