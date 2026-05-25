@@ -11,7 +11,8 @@ export function FloatingActions() {
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
         href="https://wa.me/919876543210?text=Hi%20ALTA%20FOODS%2C%20I'd%20like%20to%20know%20more%20about%20your%20paper%20fruit%20cover%20bags."
-        target="_blank" rel="noreferrer"
+        target="_blank"
+        rel="noreferrer"
         aria-label="WhatsApp"
         className="h-14 w-14 grid place-items-center rounded-full bg-[#25D366] text-white shadow-elevated"
       >

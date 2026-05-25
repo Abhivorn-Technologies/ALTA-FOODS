@@ -6,7 +6,8 @@ import { ScrollProgress } from "@/components/site/ScrollProgress";
 
 export const metadata = {
   title: "ALTA FOODS — Eco-Friendly Paper Fruit Cover Bags",
-  description: "ALTA FOODS manufactures premium biodegradable paper fruit cover bags that protect fruits from insects, birds, dust, and pesticides — for healthier harvests and export-quality yields.",
+  description:
+    "ALTA FOODS manufactures premium biodegradable paper fruit cover bags that protect fruits from insects, birds, dust, and pesticides — for healthier harvests and export-quality yields.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -15,9 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="antialiased min-h-screen flex flex-col">
         <ScrollProgress />
         <Navbar />
-        <main className="flex-grow">
-          {children}
-        </main>
+        <main className="flex-grow">{children}</main>
         <Footer />
         <FloatingActions />
       </body>

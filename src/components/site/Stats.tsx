@@ -24,7 +24,9 @@ export function Stats() {
               variants={{ hidden: { opacity: 0, scale: 0.9 }, show: { opacity: 1, scale: 1 } }}
               className="flex flex-col gap-2"
             >
-              <div className="text-4xl md:text-6xl font-bold font-display text-primary-glow">{s.val}</div>
+              <div className="text-4xl md:text-6xl font-bold font-display text-primary-glow">
+                {s.val}
+              </div>
               <div className="text-sm uppercase tracking-widest opacity-70">{s.lab}</div>
             </motion.div>
           ))}

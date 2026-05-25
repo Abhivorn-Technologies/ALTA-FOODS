@@ -19,19 +19,34 @@ export function Gallery() {
     <section className="py-24">
       <div className="container-px max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto">
-          <Reveal><span className="inline-block px-3 py-1 rounded-full text-xs uppercase tracking-[0.2em] bg-accent text-primary font-semibold">Gallery</span></Reveal>
-          <Reveal delay={0.1}><h2 className="mt-4 text-3xl md:text-5xl font-bold md:whitespace-nowrap">From our farms to our factory.</h2></Reveal>
+          <Reveal>
+            <span className="inline-block px-3 py-1 rounded-full text-xs uppercase tracking-[0.2em] bg-accent text-primary font-semibold">
+              Gallery
+            </span>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <h2 className="mt-4 text-3xl md:text-5xl font-bold md:whitespace-nowrap">
+              From our farms to our factory.
+            </h2>
+          </Reveal>
         </div>
         <div className="mt-12 columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
           {imgs.map((src, i) => (
             <motion.button
-              key={typeof src === 'object' ? src.src : src}
-              onClick={() => setOpen(src)}
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+              key={typeof src === "object" ? src.src : src}
+              onClick={() => setOpen(typeof src === "object" ? src.src : src)}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ delay: (i % 6) * 0.05 }}
               className="group mb-4 block w-full overflow-hidden rounded-3xl shadow-soft break-inside-avoid"
             >
-              <img src={typeof src === 'object' ? src.src : src} alt="Gallery" loading="lazy" className="w-full group-hover:scale-110 transition-transform duration-700" />
+              <img
+                src={typeof src === "object" ? src.src : src}
+                alt="Gallery"
+                loading="lazy"
+                className="w-full group-hover:scale-110 transition-transform duration-700"
+              />
             </motion.button>
           ))}
         </div>
@@ -39,16 +54,24 @@ export function Gallery() {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             className="fixed inset-0 z-[70] bg-bark/80 backdrop-blur-md grid place-items-center p-4"
             onClick={() => setOpen(null)}
           >
-            <button className="absolute top-5 right-5 h-10 w-10 grid place-items-center rounded-full glass" aria-label="Close">
+            <button
+              className="absolute top-5 right-5 h-10 w-10 grid place-items-center rounded-full glass"
+              aria-label="Close"
+            >
               <X className="h-5 w-5" />
             </button>
             <motion.img
-              initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-              src={typeof open === 'object' ? open.src : open} alt="Preview" className="max-h-[85vh] max-w-[92vw] rounded-2xl shadow-elevated"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              src={open}
+              alt="Preview"
+              className="max-h-[85vh] max-w-[92vw] rounded-2xl shadow-elevated"
             />
           </motion.div>
         )}
