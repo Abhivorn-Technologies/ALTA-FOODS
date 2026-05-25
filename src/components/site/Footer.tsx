@@ -2,19 +2,14 @@
 
 import Link from "next/link";
 import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, ArrowUp } from "lucide-react";
-import logo from "@/assets/logo.png";
 
 export function Footer() {
   return (
     <footer className="mt-24 bg-bark text-primary-foreground/90">
       <div className="container-px max-w-7xl mx-auto py-16 grid gap-12 md:grid-cols-4">
         <div>
-          <div className="flex items-center gap-2">
-            <img src={typeof logo === 'object' ? logo.src : logo} alt="ALTA FOODS" className="h-10 w-10 bg-background/90 rounded-lg p-1" />
-            <div>
-              <div className="font-display font-bold text-lg text-background">ALTA FOODS</div>
-              <div className="text-xs uppercase tracking-widest opacity-70">Protecting Fruits Naturally</div>
-            </div>
+          <div className="flex items-center -ml-4 -my-4">
+            <img src="/images/logo.png" alt="ALTA FOODS" className="h-32 w-auto object-contain origin-left" />
           </div>
           <p className="mt-4 text-sm opacity-80 leading-relaxed">
             Manufacturers of premium eco-friendly paper fruit cover bags for sustainable agriculture and export-quality harvests.
@@ -34,9 +29,9 @@ export function Footer() {
             {[
               ["/about", "About", false],
               ["/products", "Products", false],
-              ["/benefits", "Benefits", false],
-              ["/applications", "Applications", false],
-              ["/sustainability", "Sustainability", false],
+              // ["/applications", "Applications", false],
+              ["/quality", "Quality Control", false],
+              // ["/sustainability", "Sustainability", false],
               ["/gallery", "Gallery", false],
               ["/terms-and-conditions", "Terms & Conditions", true],
               ["/privacy-policy", "Privacy Policy", true]

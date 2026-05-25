@@ -9,7 +9,7 @@ import { Testimonials } from "@/components/site/Testimonials";
 export default function Page() {
   return (
     <>
-      <PageHeader eyebrow="Our catalogue" title="Premium fruit protection, crafted in paper." subtitle="Engineered for every fruit, every climate, and every farm size." />
+      <PageHeader eyebrow="Our catalogue" title="Premium fruit protection, crafted in paper." subtitle="Engineered for every fruit, every climate, and every farm size." backgroundImage="/images/hero/products.png" />
       <Products />
       <Process />
       <Testimonials />

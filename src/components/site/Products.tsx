@@ -4,8 +4,9 @@ import { motion } from "framer-motion";
 import { Leaf, Ruler } from "lucide-react";
 import { Reveal, Stagger } from "./Reveal";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
-export function Products() {
+export function Products({ layout = "grid" }: { layout?: "grid" | "marquee" }) {
   // 1. Create a state to store our dynamic products
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -38,40 +39,83 @@ export function Products() {
         {loading ? (
           <div className="mt-12 text-center text-muted-foreground">Loading latest products...</div>
         ) : (
-          <Stagger className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((p: any) => (
-              <motion.article
-                key={p.id || p.name}
-                variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}
-                whileHover={{ y: -6 }}
-                className="group glass rounded-3xl overflow-hidden shadow-soft hover:shadow-elevated transition-all flex flex-col"
-              >
-                <div className="aspect-[4/3] overflow-hidden bg-muted relative">
-                  {/* Using the image_url from the Django API */}
-                  <img src={p.image_url} alt={p.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                  <span className="absolute top-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-leaf text-primary-foreground text-xs font-semibold">
-                    <Leaf className="h-3 w-3" /> Eco-Friendly
-                  </span>
-                </div>
-                <div className="p-6 flex flex-col flex-grow">
-                  <h3 className="font-display text-xl font-semibold">{p.name}</h3>
-                  <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground flex-grow">
-                    {/* Ensure features is mapped correctly even if empty */}
-                    {p.features && p.features.length > 0 ? (
-                      p.features.map((f: string, i: number) => (<li key={i} className="flex gap-2"><span className="text-primary">●</span>{f}</li>))
-                    ) : (
-                      <li>No specific features listed.</li>
-                    )}
-                  </ul>
-                  <div className="mt-4 flex items-center gap-2 text-xs text-foreground/70">
-                    <Ruler className="h-3.5 w-3.5 text-primary" />
-                    <span>Sizes: {p.sizes}</span>
+          layout === "marquee" ? (
+            <div className="mt-12 overflow-hidden flex relative w-full group py-8 -my-8">
+               <div className="flex gap-6 animate-marquee w-max hover:[animation-play-state:paused]">
+                  {[...products, ...products].map((p: any, idx: number) => (
+                     <article 
+                        key={`${p.id}-${idx}`}
+                        className="w-[280px] sm:w-[340px] shrink-0 glass rounded-3xl overflow-hidden shadow-soft hover:shadow-elevated transition-all flex flex-col group/card hover:-translate-y-2 duration-300"
+                     >
+                        <div className="aspect-[16/9] overflow-hidden bg-muted relative">
+                          <img src={p.image_url} alt={p.name} loading="lazy" className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700" />
+                          <span className="absolute top-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-leaf text-primary-foreground text-xs font-semibold">
+                            <Leaf className="h-3 w-3" /> Eco-Friendly
+                          </span>
+                        </div>
+                        <div className="p-5 flex flex-col flex-grow">
+                          <h3 className="font-display text-lg font-semibold">{p.name}</h3>
+                          <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground flex-grow">
+                            {p.features && p.features.length > 0 ? (
+                              p.features.map((f: string, i: number) => (<li key={i} className="flex gap-2"><span className="text-primary">●</span>{f}</li>))
+                            ) : (
+                              <li>No specific features listed.</li>
+                            )}
+                          </ul>
+                          <div className="mt-4 flex items-center gap-2 text-xs text-foreground/70">
+                            <Ruler className="h-3.5 w-3.5 text-primary" />
+                            <span>Sizes: {p.sizes}</span>
+                          </div>
+                          <div className="mt-4 text-xs uppercase tracking-widest text-primary font-semibold">Material: {p.material}</div>
+                          <div className="mt-5 pt-4 border-t border-border/50 mt-auto">
+                            <Link href={`/products/${p.name.toLowerCase().split(' ')[0]}`} className="inline-flex w-full items-center justify-center rounded-full bg-primary/10 px-4 py-2.5 text-sm font-semibold text-primary hover:bg-primary hover:text-primary-foreground transition-colors">
+                              View Product
+                            </Link>
+                          </div>
+                        </div>
+                     </article>
+                  ))}
+               </div>
+            </div>
+          ) : (
+            <Stagger className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {products.map((p: any) => (
+                <motion.article
+                  key={p.id || p.name}
+                  variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}
+                  whileHover={{ y: -6 }}
+                  className="group glass rounded-3xl overflow-hidden shadow-soft hover:shadow-elevated transition-all flex flex-col"
+                >
+                  <div className="aspect-[4/3] overflow-hidden bg-muted relative">
+                    <img src={p.image_url} alt={p.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                    <span className="absolute top-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-leaf text-primary-foreground text-xs font-semibold">
+                      <Leaf className="h-3 w-3" /> Eco-Friendly
+                    </span>
                   </div>
-                  <div className="mt-4 text-xs uppercase tracking-widest text-primary font-semibold">Material: {p.material}</div>
-                </div>
-              </motion.article>
-            ))}
-          </Stagger>
+                  <div className="p-6 flex flex-col flex-grow">
+                    <h3 className="font-display text-xl font-semibold">{p.name}</h3>
+                    <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground flex-grow">
+                      {p.features && p.features.length > 0 ? (
+                        p.features.map((f: string, i: number) => (<li key={i} className="flex gap-2"><span className="text-primary">●</span>{f}</li>))
+                      ) : (
+                        <li>No specific features listed.</li>
+                      )}
+                    </ul>
+                    <div className="mt-4 flex items-center gap-2 text-xs text-foreground/70">
+                      <Ruler className="h-3.5 w-3.5 text-primary" />
+                      <span>Sizes: {p.sizes}</span>
+                    </div>
+                    <div className="mt-4 text-xs uppercase tracking-widest text-primary font-semibold">Material: {p.material}</div>
+                    <div className="mt-5 pt-4 border-t border-border/50 mt-auto">
+                      <Link href={`/products/${p.name.toLowerCase().split(' ')[0]}`} className="inline-flex w-full items-center justify-center rounded-full bg-primary/10 px-4 py-2.5 text-sm font-semibold text-primary hover:bg-primary hover:text-primary-foreground transition-colors">
+                        View Product
+                      </Link>
+                    </div>
+                  </div>
+                </motion.article>
+              ))}
+            </Stagger>
+          )
         )}
       </div>
     </section>

@@ -7,7 +7,12 @@ import { Gallery } from "@/components/site/Gallery";
 export default function Page() {
   return (
     <>
-      <PageHeader eyebrow="In the field" title="From our farms to our factory." subtitle="A look behind the scenes of premium fruit protection." />
+      <PageHeader 
+        eyebrow="Gallery" 
+        title="See protection in action." 
+        subtitle="Explore real-world applications of our products in orchards around the world." 
+        backgroundImage="/images/hero/gallery.png"
+      />
       <Gallery />
     </>
   );
