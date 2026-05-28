@@ -1,8 +1,5 @@
 import "./globals.css";
-import { Navbar } from "@/components/site/Navbar";
-import { Footer } from "@/components/site/Footer";
-import { FloatingActions } from "@/components/site/FloatingActions";
-import { ScrollProgress } from "@/components/site/ScrollProgress";
+import { AppShell } from "@/components/AppShell";
 
 export const metadata = {
   title: "ALTA FOODS — Eco-Friendly Paper Fruit Cover Bags",
@@ -10,16 +7,11 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased min-h-screen flex flex-col">
-        <ScrollProgress />
-        <Navbar />
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Footer />
-        <FloatingActions />
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );
