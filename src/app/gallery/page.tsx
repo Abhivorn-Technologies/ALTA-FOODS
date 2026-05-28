@@ -10,7 +10,7 @@ export default function Page() {
         subtitle="Explore real-world applications of our products in orchards around the world."
         backgroundImage="/images/hero/gallery.png"
       />
-      <Gallery />
+      <Gallery showCategories={true} />
     </>
   );
 }

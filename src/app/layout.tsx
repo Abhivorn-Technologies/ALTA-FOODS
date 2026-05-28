@@ -3,6 +3,7 @@ import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { FloatingActions } from "@/components/site/FloatingActions";
 import { ScrollProgress } from "@/components/site/ScrollProgress";
+import { Toaster } from "sonner";
 
 export const metadata = {
   title: "ALTA FOODS — Eco-Friendly Paper Fruit Cover Bags",
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="flex-grow">{children}</main>
         <Footer />
         <FloatingActions />
+        <Toaster position="bottom-right" richColors theme="light" />
       </body>
     </html>
   );

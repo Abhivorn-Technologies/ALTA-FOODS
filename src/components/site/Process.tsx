@@ -50,7 +50,7 @@ export function Process() {
               className="relative group"
             >
               {i < steps.length - 1 && (
-                <div className="hidden md:block absolute top-12 left-1/2 w-full h-0.5 bg-border -z-10" />
+                <div className="hidden md:block absolute top-10 left-1/2 w-[calc(100%+2rem)] border-t-[3px] border-dotted border-primary/40 -z-10" />
               )}
               <div className="h-20 w-20 rounded-full bg-background shadow-soft border grid place-items-center mb-6 group-hover:scale-110 transition-transform bg-white">
                 <s.icon className="h-8 w-8 text-primary" />

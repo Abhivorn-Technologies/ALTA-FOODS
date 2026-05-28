@@ -218,7 +218,8 @@ export default function ProductDetailPage() {
     if (!slug) return;
 
     // Fetch product details from Django backend
-    fetch(`http://127.0.0.1:8000/api/products/${slug}/`)
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+    fetch(`${apiUrl}/api/products/${slug}/`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Product not found in backend database");
@@ -230,7 +231,7 @@ export default function ProductDetailPage() {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Backend fetch failed, checking fallbacks:", error);
+        console.warn("Backend fetch failed, checking fallbacks:", error.message || error);
 
         // If it's one of our initial 5 fruits, we can allow rendering even without backend
         if (fruitKey) {

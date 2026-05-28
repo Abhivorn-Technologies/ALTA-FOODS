@@ -14,10 +14,9 @@ export function FloatingActions() {
         target="_blank"
         rel="noreferrer"
         aria-label="WhatsApp"
-        className="h-14 w-14 grid place-items-center rounded-full bg-[#25D366] text-white shadow-elevated"
+        className="h-14 w-14 grid place-items-center rounded-full bg-[#25D366] text-white shadow-elevated relative"
       >
-        <WhatsAppIcon className="h-7 w-7" />
-        <span className="absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-40 animate-ping" />
+        <WhatsAppIcon className="h-7 w-7 relative z-10" />
       </motion.a>
       <motion.a
         whileHover={{ scale: 1.08 }}

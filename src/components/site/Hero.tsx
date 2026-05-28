@@ -40,10 +40,10 @@ export function Hero() {
         <AnimatePresence>
           <motion.img
             key={current}
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
+            initial={{ opacity: 0, scale: 1 }}
+            animate={{ opacity: 1, scale: 1.15 }}
+            exit={{ opacity: 0, scale: 1.2 }}
+            transition={{ opacity: { duration: 1.5 }, scale: { duration: 10, ease: "linear" } }}
             src={slides[current].image}
             alt={`${slides[current].fruit} Protection`}
             className="absolute inset-0 w-full h-full object-cover"
@@ -105,18 +105,7 @@ export function Hero() {
           </Link>
         </div>
 
-        {/* Carousel Indicators */}
-        <div className="mt-16 flex gap-3 bg-black/20 p-2.5 rounded-full backdrop-blur-md border border-white/10 shadow-soft">
-          {slides.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrent(idx)}
-              className={`h-2.5 rounded-full transition-all duration-500 ${current === idx ? "w-10 bg-primary-glow" : "w-2.5 bg-white/40 hover:bg-white/70"}`}
-              aria-label={`Go to slide ${idx + 1}`}
-              suppressHydrationWarning={true}
-            />
-          ))}
-        </div>
+
       </div>
     </section>
   );

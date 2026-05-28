@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { CheckCircle2, Settings, Instagram, Youtube, Facebook, MessageCircle } from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { CheckCircle2, Settings, Instagram, Youtube, Facebook, MessageCircle, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface ProductDetailsProps {
   overview: string;
@@ -14,11 +15,19 @@ interface ProductDetailsProps {
 }
 
 export function ProductDetails({ overview, specs, advantages, images }: ProductDetailsProps) {
+  const [imageIdx, setImageIdx] = useState(0);
   const defaultImages = {
     stage: "/images/hero/gallery.png",
     result: "/images/hero/quality.png",
   };
   const gallery = images || defaultImages;
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setImageIdx((prev) => (prev === 0 ? 1 : 0));
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <section className="py-24 bg-background relative overflow-hidden">
@@ -40,41 +49,57 @@ export function ProductDetails({ overview, specs, advantages, images }: ProductD
             </p>
           </motion.div>
 
-          {/* Right Column: Specifications */}
+          {/* Right Column: Image Carousel */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="glass rounded-3xl p-8 border border-border shadow-soft bg-background/50">
-              <div className="flex items-center gap-3 mb-8 pb-6 border-b border-border/50">
-                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary-glow">
-                  <Settings className="h-6 w-6" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-foreground">Specifications</h3>
-                  <p className="text-sm text-muted-foreground">Technical details of the bag</p>
-                </div>
+            <div className="rounded-3xl overflow-hidden shadow-soft aspect-[4/3] bg-muted relative group">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={imageIdx}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                  src={[gallery.result, gallery.stage][imageIdx]}
+                  alt="Product"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+              </AnimatePresence>
+              
+              {/* Carousel Controls */}
+              <div className="absolute inset-0 flex items-center justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <button 
+                  onClick={() => setImageIdx(i => (i === 0 ? 1 : 0))}
+                  className="h-10 w-10 rounded-full bg-background/80 backdrop-blur text-foreground flex items-center justify-center shadow-lg hover:bg-background hover:scale-110 transition-all"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button 
+                  onClick={() => setImageIdx(i => (i === 0 ? 1 : 0))}
+                  className="h-10 w-10 rounded-full bg-background/80 backdrop-blur text-foreground flex items-center justify-center shadow-lg hover:bg-background hover:scale-110 transition-all"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
               </div>
-
-              <div className="grid grid-cols-2 gap-x-8 gap-y-8">
-                {specs.map((spec, idx) => (
-                  <div key={idx}>
-                    <div className="text-xs uppercase tracking-widest text-muted-foreground mb-1.5">
-                      {spec.label}
-                    </div>
-                    <div className="font-semibold text-foreground text-sm md:text-base">
-                      {spec.value}
-                    </div>
-                  </div>
+              
+              {/* Carousel Indicators */}
+              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+                {[gallery.result, gallery.stage].map((_, idx) => (
+                  <div 
+                    key={idx} 
+                    className={`h-2 rounded-full transition-all duration-300 ${imageIdx === idx ? 'w-6 bg-white' : 'w-2 bg-white/50'}`}
+                  />
                 ))}
               </div>
             </div>
           </motion.div>
         </div>
 
-        {/* Visual Evidence / Gallery */}
+        {/* Specifications Section */}
         <div className="mb-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -82,29 +107,24 @@ export function ProductDetails({ overview, specs, advantages, images }: ProductD
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h3 className="text-2xl md:text-3xl font-bold font-display mb-8 text-foreground text-center">
-              Visual <span className="text-gradient">Gallery</span>
-            </h3>
-            <div className="grid sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              <div className="rounded-3xl overflow-hidden shadow-soft aspect-[4/3] bg-muted relative group">
-                <img
-                  src={gallery.stage}
-                  alt="Bagging Stage"
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute bottom-4 left-4 right-4 bg-background/90 backdrop-blur text-sm font-semibold px-4 py-3 rounded-xl text-center shadow-lg">
-                  Stage of Bagging
+            <div className="glass rounded-3xl p-6 md:p-8 border border-border shadow-soft bg-background/50">
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border/50">
+                <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                  <Settings className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-foreground">Specifications</h3>
+                  <p className="text-xs text-muted-foreground">Technical details of the bag</p>
                 </div>
               </div>
-              <div className="rounded-3xl overflow-hidden shadow-soft aspect-[4/3] bg-muted relative group">
-                <img
-                  src={gallery.result}
-                  alt="Final Result"
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute bottom-4 left-4 right-4 bg-background/90 backdrop-blur text-sm font-semibold px-4 py-3 rounded-xl text-center shadow-lg">
-                  Last Season Results
-                </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-5">
+                {specs.map((spec, idx) => (
+                  <div key={idx}>
+                    <div className="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">{spec.label}</div>
+                    <div className="font-semibold text-foreground text-sm">{spec.value}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </motion.div>

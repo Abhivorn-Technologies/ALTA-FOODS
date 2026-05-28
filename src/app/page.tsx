@@ -22,13 +22,23 @@ const CTA = dynamic(() => import("@/components/site/CTA").then((mod) => mod.CTA)
   ssr: false,
 });
 
+const BentoFeatures = dynamic(() => import("@/components/site/BentoFeatures").then((mod) => mod.BentoFeatures), {
+  ssr: false,
+});
+
+const StickyShowcase = dynamic(() => import("@/components/site/StickyShowcase").then((mod) => mod.StickyShowcase), {
+  ssr: false,
+});
+
 export default function Home() {
   return (
     <>
       <Hero />
+      <BentoFeatures />
       <About />
+      <StickyShowcase />
       <Products layout="marquee" />
-      <Gallery />
+      <Gallery limit={6} />
       <CTA />
     </>
   );
