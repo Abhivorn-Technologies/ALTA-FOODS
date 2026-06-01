@@ -14,7 +14,8 @@ export function FloatingLeaves() {
             style={{
               left: `${left}%`,
               bottom: `-${20 + (i % 5) * 10}px`,
-              width: size, height: size,
+              width: size,
+              height: size,
               animationDelay: `${delay}s`,
               animationDuration: `${10 + (i % 6) * 2}s`,
             }}

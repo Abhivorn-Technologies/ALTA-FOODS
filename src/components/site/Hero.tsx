@@ -1,94 +1,112 @@
-import { Link } from "@tanstack/react-router";
-import { motion } from "framer-motion";
-import { ArrowRight, Award, Leaf, Recycle, ShieldCheck, Sparkles } from "lucide-react";
-import hero from "@/assets/hero-orchard.jpg";
+"use client";
+
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, Sparkles } from "lucide-react";
+import { useState, useEffect } from "react";
 import { FloatingLeaves } from "./FloatingLeaves";
 
+const slides = [
+  {
+    fruit: "All Fruits",
+    image: "/images/hero/products.png",
+    color: "from-green-400 to-yellow-400",
+  },
+  { fruit: "Mangoes", image: "/images/hero/mango.png", color: "from-yellow-300 to-orange-500" },
+  { fruit: "Apples", image: "/images/hero/apple.png", color: "from-red-400 to-rose-600" },
+  { fruit: "Bananas", image: "/images/hero/banana.png", color: "from-yellow-200 to-yellow-500" },
+  {
+    fruit: "Pomegranates",
+    image: "/images/hero/pomegranate.png",
+    color: "from-rose-400 to-red-600",
+  },
+  { fruit: "Guavas", image: "/images/hero/guava.png", color: "from-green-300 to-emerald-500" },
+];
+
 export function Hero() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length);
+    }, 6000); // 6 second interval
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <section className="relative min-h-screen flex items-center pt-16 overflow-hidden">
-      <div className="absolute inset-0 -z-10">
-        <img src={hero} alt="Mango orchard with paper cover bags" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-br from-bark/85 via-bark/55 to-primary/40" />
+    <section className="relative min-h-[95vh] lg:min-h-[850px] flex items-center justify-center pt-20 pb-20 overflow-hidden">
+      {/* Background Slides */}
+      <div className="absolute inset-0 -z-20 bg-bark">
+        <AnimatePresence>
+          <motion.img
+            key={current}
+            initial={{ opacity: 0, scale: 1 }}
+            animate={{ opacity: 1, scale: 1.15 }}
+            exit={{ opacity: 0, scale: 1.2 }}
+            transition={{ opacity: { duration: 1.5 }, scale: { duration: 10, ease: "linear" } }}
+            src={slides[current].image}
+            alt={`${slides[current].fruit} Protection`}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </AnimatePresence>
+        {/* Cinematic gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-bark via-bark/50 to-bark/30 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-primary/20" />
       </div>
+
       <FloatingLeaves />
 
-      <div className="container-px max-w-7xl mx-auto pt-6 pb-20 grid md:grid-cols-12 gap-10 items-center">
-        <div className="md:col-span-7 text-primary-foreground">
-          <motion.span
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-dark text-xs uppercase tracking-[0.2em] font-semibold"
-          >
-            <Sparkles className="h-3.5 w-3.5 text-primary-glow" /> Export-Quality Eco Packaging
-          </motion.span>
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }}
-            className="mt-5 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight"
-          >
-            Eco-Friendly Paper Fruit Cover Bags for{" "}
-            <span className="text-gradient">Better Protection</span> & Healthier Harvests
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.25 }}
-            className="mt-6 text-lg md:text-xl max-w-2xl opacity-90"
-          >
-            ALTA FOODS delivers sustainable fruit protection solutions that improve crop quality,
-            reduce chemical exposure, and elevate farming efficiency.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-8 flex flex-wrap gap-3"
-          >
-            <Link to="/products" className="group inline-flex items-center gap-2 rounded-full bg-leaf text-primary-foreground px-6 py-3 font-semibold shadow-glow hover:shadow-soft transition">
-              Explore Products <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition" />
-            </Link>
-            <Link to="/contact" className="inline-flex items-center gap-2 rounded-full glass-dark text-primary-foreground px-6 py-3 font-semibold border border-primary-foreground/20 hover:bg-primary-foreground/10 transition">
-              Contact Us
-            </Link>
-          </motion.div>
+      {/* Main Content */}
+      <div className="container-px max-w-5xl mx-auto text-center text-primary-foreground relative z-10 flex flex-col items-center mt-12">
+        <motion.span
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-dark text-xs uppercase tracking-[0.2em] font-bold shadow-glow"
+        >
+          <Sparkles className="h-4 w-4 text-primary-glow" /> ALTA FOODS EXPORT QUALITY
+        </motion.span>
 
-          <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7, duration: 1 }}
-            className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl"
-          >
-            {[
-              { icon: ShieldCheck, label: "ISO Certified" },
-              { icon: Leaf, label: "100% Biodegradable" },
-              { icon: Recycle, label: "Eco Material" },
-              { icon: Award, label: "Export Grade" },
-            ].map(({ icon: Icon, label }) => (
-              <div key={label} className="glass-dark rounded-xl px-3 py-2.5 flex items-center gap-2 border border-primary-foreground/10">
-                <Icon className="h-4 w-4 text-primary-glow" />
-                <span className="text-xs font-medium">{label}</span>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-
-        <div className="md:col-span-5">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, delay: 0.3 }}
-            className="grid grid-cols-2 gap-4"
-          >
-            {[
-              { v: "12+", l: "Years Experience" },
-              { v: "50M+", l: "Bags Manufactured" },
-              { v: "1,200+", l: "Happy Farmers" },
-              { v: "8", l: "Countries Served" },
-            ].map((s, i) => (
-              <motion.div
-                key={s.l}
-                initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 + i * 0.1 }}
-                className="glass rounded-2xl p-5 shadow-soft"
+        <h1 className="mt-8 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
+          Premium Protection for <br />
+          <span className="inline-block min-w-[300px] mt-2">
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={current}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+                className={`bg-clip-text text-transparent bg-gradient-to-r inline-block drop-shadow-sm ${slides[current].color}`}
               >
-                <div className="text-3xl md:text-4xl font-display font-bold text-gradient">{s.v}</div>
-                <div className="text-xs uppercase tracking-widest mt-1 text-muted-foreground">{s.l}</div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </div>
+                {slides[current].fruit}
+              </motion.span>
+            </AnimatePresence>
+          </span>
+        </h1>
 
+        <p className="mt-6 text-lg md:text-xl max-w-2xl mx-auto text-white/90 leading-relaxed font-medium">
+          Sustainable, eco-friendly paper fruit cover bags engineered to improve crop quality,
+          reduce chemical exposure, and elevate your farming efficiency.
+        </p>
+
+        <div className="mt-10 flex flex-wrap justify-center gap-4">
+          <Link
+            href="/products"
+            className="group inline-flex items-center gap-2 rounded-full bg-leaf text-primary-foreground px-8 py-3.5 text-base font-bold shadow-glow hover:shadow-soft transition-all hover:-translate-y-1"
+          >
+            Explore Products <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition" />
+          </Link>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 rounded-full glass-dark text-primary-foreground px-8 py-3.5 text-base font-bold border border-white/20 hover:bg-white/10 transition-all hover:-translate-y-1"
+          >
+            Contact Us
+          </Link>
+        </div>
+
+
+      </div>
     </section>
   );
 }

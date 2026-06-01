@@ -15,8 +15,14 @@ export function Comparison() {
     <section className="py-24">
       <div className="container-px max-w-4xl mx-auto">
         <div className="text-center mb-16">
-          <Reveal><span className="inline-block px-3 py-1 rounded-full text-xs uppercase tracking-[0.2em] bg-accent text-primary font-semibold">The Difference</span></Reveal>
-          <Reveal delay={0.1}><h2 className="mt-4 text-3xl md:text-4xl font-bold">Paper vs. Plastic</h2></Reveal>
+          <Reveal>
+            <span className="inline-block px-3 py-1 rounded-full text-xs uppercase tracking-[0.2em] bg-accent text-primary font-semibold">
+              The Difference
+            </span>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <h2 className="mt-4 text-3xl md:text-4xl font-bold">Paper vs. Plastic</h2>
+          </Reveal>
         </div>
 
         <div className="glass rounded-3xl overflow-hidden shadow-elevated">
@@ -38,7 +44,9 @@ export function Comparison() {
                     </div>
                   </td>
                   <td className="p-6 text-center">
-                    <div className={`h-8 w-8 rounded-full grid place-items-center mx-auto ${r.plastic ? "bg-primary/10 text-primary" : "bg-destructive/10 text-destructive"}`}>
+                    <div
+                      className={`h-8 w-8 rounded-full grid place-items-center mx-auto ${r.plastic ? "bg-primary/10 text-primary" : "bg-destructive/10 text-destructive"}`}
+                    >
                       {r.plastic ? <Check className="h-5 w-5" /> : <X className="h-5 w-5" />}
                     </div>
                   </td>

@@ -1,0 +1,158 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-glow: var(--primary-glow);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-kraft: var(--kraft);
+  --color-kraft-foreground: var(--kraft-foreground);
+  --color-bark: var(--bark);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", "Inter", sans-serif;
+}
+
+:root {
+  --radius: 0.875rem;
+  /* Premium Grey palette in oklch */
+  --background: oklch(0.985 0 0);              /* almost white */
+  --foreground: oklch(0.145 0 0);              /* very dark grey */
+  --card: oklch(1 0 0);                        /* pure white */
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.145 0 0);                 /* dark grey */
+  --primary-foreground: oklch(0.985 0 0);
+  --primary-glow: oklch(0.4 0 0);              /* mid grey */
+  --secondary: oklch(0.95 0 0);                /* light grey */
+  --secondary-foreground: oklch(0.145 0 0);
+  --muted: oklch(0.95 0 0);
+  --muted-foreground: oklch(0.5 0 0);
+  --accent: oklch(0.92 0 0);
+  --accent-foreground: oklch(0.145 0 0);
+  --kraft: oklch(0.92 0 0);                    /* soft grey */
+  --kraft-foreground: oklch(0.145 0 0);
+  --bark: oklch(0.2 0 0);                      /* deep charcoal */
+  --destructive: oklch(0.6 0.22 27);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.9 0 0);
+  --input: oklch(0.9 0 0);
+  --ring: oklch(0.145 0 0);
+
+  --gradient-hero: linear-gradient(135deg, oklch(0.145 0 0) 0%, oklch(0.3 0 0) 100%);
+  --gradient-leaf: linear-gradient(135deg, oklch(0.2 0 0), oklch(0.5 0 0));
+  --gradient-paper: linear-gradient(135deg, oklch(0.98 0 0), oklch(0.92 0 0));
+  --shadow-soft: 0 10px 30px -12px color-mix(in oklab, var(--primary) 15%, transparent);
+  --shadow-glow: 0 0 60px -10px color-mix(in oklab, var(--primary-glow) 30%, transparent);
+  --shadow-elevated: 0 25px 50px -20px color-mix(in oklab, var(--bark) 20%, transparent);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.18 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.18 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.145 0 0);
+  --primary-glow: oklch(0.7 0 0);
+  --secondary: oklch(0.25 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.25 0 0);
+  --muted-foreground: oklch(0.6 0 0);
+  --accent: oklch(0.3 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --kraft: oklch(0.22 0 0);
+  --kraft-foreground: oklch(0.985 0 0);
+  --bark: oklch(0.9 0 0);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.985 0 0);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(800px 400px at 10% -10%, color-mix(in oklab, var(--primary-glow) 10%, transparent), transparent),
+      radial-gradient(600px 400px at 110% 10%, color-mix(in oklab, var(--kraft) 12%, transparent), transparent);
+  }
+  h1,h2,h3,h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+}
+
+@layer utilities {
+  .glass {
+    background: color-mix(in oklab, var(--card) 70%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+  }
+  .glass-dark {
+    background: color-mix(in oklab, var(--bark) 25%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+  }
+  .text-gradient {
+    background: var(--gradient-leaf);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .bg-hero { background: var(--gradient-hero); }
+  .bg-leaf { background: var(--gradient-leaf); }
+  .bg-paper { background: var(--gradient-paper); }
+  .shadow-soft { box-shadow: var(--shadow-soft); }
+  .shadow-glow { box-shadow: var(--shadow-glow); }
+  .shadow-elevated { box-shadow: var(--shadow-elevated); }
+  .container-px { padding-inline: 1.25rem; }
+  @media (min-width: 768px) { .container-px { padding-inline: 2.5rem; } }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-18px) rotate(6deg); }
+}
+@keyframes drift {
+  0% { transform: translate(0,0) rotate(0); opacity:0; }
+  10% { opacity: .8; }
+  100% { transform: translate(120px,-200px) rotate(180deg); opacity:0; }
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 0.75rem)); } /* -50% and half of the 1.5rem gap */
+}
+.animate-float { animation: float 8s ease-in-out infinite; }
+.animate-drift { animation: drift 14s linear infinite; }
+.animate-marquee { animation: marquee 35s linear infinite; }
+.group:hover .animate-marquee { animation-play-state: paused; }

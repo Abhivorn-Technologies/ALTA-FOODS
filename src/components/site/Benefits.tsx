@@ -1,3 +1,5 @@
+"use client";
+
 import { Bug, ShieldCheck, Bird, Sparkles, Recycle, Wallet, Palette, CloudSun } from "lucide-react";
 import { motion } from "framer-motion";
 import { Reveal, Stagger } from "./Reveal";
@@ -18,8 +20,16 @@ export function Benefits() {
     <section className="py-24 relative bg-paper/40">
       <div className="container-px max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto">
-          <Reveal><span className="inline-block px-3 py-1 rounded-full text-xs uppercase tracking-[0.2em] bg-card text-primary font-semibold">Why Farmers Choose Us</span></Reveal>
-          <Reveal delay={0.1}><h2 className="mt-4 text-3xl md:text-5xl font-bold">Eight reasons paper beats chemicals.</h2></Reveal>
+          <Reveal>
+            <span className="inline-block px-3 py-1 rounded-full text-xs uppercase tracking-[0.2em] bg-card text-primary font-semibold">
+              Why Farmers Choose Us
+            </span>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <h2 className="mt-4 text-3xl md:text-5xl font-bold">
+              Eight reasons paper beats chemicals.
+            </h2>
+          </Reveal>
         </div>
         <Stagger className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {benefits.map(({ icon: Icon, t, d }) => (

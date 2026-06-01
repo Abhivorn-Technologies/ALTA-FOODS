@@ -1,63 +1,178 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { Leaf, Ruler } from "lucide-react";
 import { Reveal, Stagger } from "./Reveal";
-import mango from "@/assets/product-mango.jpg";
-import apple from "@/assets/product-apple.jpg";
-import banana from "@/assets/product-banana.png";
-import guava from "@/assets/product-guava.jpg";
-import pomegranate from "@/assets/product-pomegranate.jpg";
-import custom from "@/assets/product-custom.jpg";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
-const products = [
-  { img: mango, name: "Mango Paper Cover Bags", features: ["UV resistant", "Breathable kraft", "Insect proof"], sizes: "8×12 / 10×14 / 12×16 in" },
-  { img: apple, name: "Apple Protection Bags", features: ["Color enhancement", "Bird & hail proof", "Single-layer"], sizes: "6×8 / 7×9 in" },
-  { img: banana, name: "Banana Fruit Cover Bags", features: ["Dust shield", "Breathable paper", "Long durability"], sizes: "Up to 36×48 in" },
-  { img: guava, name: "Guava Paper Bags", features: ["Fruit fly barrier", "Soft texture", "Compostable"], sizes: "6×8 / 8×10 in" },
-  { img: pomegranate, name: "Pomegranate Covers", features: ["Sun-stress reduction", "Crack prevention", "Natural fiber"], sizes: "6×8 / 7×9 in" },
-  { img: custom, name: "Custom Fruit Bags", features: ["Branded prints", "Bespoke sizing", "Bulk orders"], sizes: "Made to order" },
-];
+interface BackendProduct {
+  id: number;
+  name: string;
+  slug: string;
+  image_url: string;
+  features: string[];
+  sizes: string;
+  material: string;
+}
 
-export function Products() {
+export function Products({ layout = "grid", hideHeader = false }: { layout?: "grid" | "marquee"; hideHeader?: boolean }) {
+  // 1. Create a state to store our dynamic products
+  const [products, setProducts] = useState<BackendProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // 2. Fetch the products from the Django Backend when the component loads
+  useEffect(() => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+    fetch(`${apiUrl}/api/products/`)
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.warn("Error fetching products:", error.message || error);
+        setLoading(false);
+      });
+  }, []);
+
   return (
-    <section className="py-24 relative">
-      <div className="container-px max-w-7xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto">
-          <Reveal>
-            <span className="inline-block px-3 py-1 rounded-full text-xs uppercase tracking-[0.2em] bg-accent text-primary font-semibold">Our Products</span>
-          </Reveal>
-          <Reveal delay={0.1}><h2 className="mt-4 text-3xl md:text-5xl font-bold">Premium fruit protection, crafted in paper.</h2></Reveal>
-          <Reveal delay={0.2}><p className="mt-4 text-muted-foreground">Engineered for every fruit, every climate, every farm size.</p></Reveal>
+    <section className={`${hideHeader ? 'py-0' : 'py-24'} relative overflow-hidden`}>
+      {!hideHeader && (
+        <div className="container-px max-w-7xl mx-auto">
+          <div className="text-center max-w-2xl mx-auto">
+            <Reveal>
+              <span className="inline-block px-3 py-1 rounded-full text-xs uppercase tracking-[0.2em] bg-accent text-primary font-semibold">
+                Our Products
+              </span>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <h2 className="mt-4 text-3xl md:text-5xl font-bold">
+                Premium fruit protection, crafted in paper.
+              </h2>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p className="mt-4 text-muted-foreground">
+                Engineered for every fruit, every climate, every farm size.
+              </p>
+            </Reveal>
+          </div>
         </div>
+      )}
 
-        <Stagger className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((p) => (
-            <motion.article
-              key={p.name}
-              variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}
-              whileHover={{ y: -6 }}
-              className="group glass rounded-3xl overflow-hidden shadow-soft hover:shadow-elevated transition-all"
-            >
-              <div className="aspect-[4/3] overflow-hidden bg-muted relative">
-                <img src={p.img} alt={p.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                <span className="absolute top-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-leaf text-primary-foreground text-xs font-semibold">
-                  <Leaf className="h-3 w-3" /> Eco-Friendly
-                </span>
-              </div>
-              <div className="p-6">
-                <h3 className="font-display text-xl font-semibold">{p.name}</h3>
-                <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
-                  {p.features.map((f) => (<li key={f} className="flex gap-2"><span className="text-primary">●</span>{f}</li>))}
-                </ul>
-                <div className="mt-4 flex items-center gap-2 text-xs text-foreground/70">
-                  <Ruler className="h-3.5 w-3.5 text-primary" />
-                  <span>Sizes: {p.sizes}</span>
+      {loading ? (
+        <div className="container-px max-w-7xl mx-auto">
+          <div className="mt-12 text-center text-muted-foreground">Loading latest products...</div>
+        </div>
+      ) : layout === "marquee" ? (
+        <div className="mt-12 overflow-hidden flex relative w-full group py-8">
+          <div className="flex gap-6 animate-marquee w-max hover:[animation-play-state:paused] pl-6">
+            {[...products, ...products, ...products, ...products].map((p: BackendProduct, idx: number) => (
+              <article
+                key={`${p.id}-${idx}`}
+                className="w-[280px] sm:w-[340px] shrink-0 glass rounded-3xl overflow-hidden shadow-soft hover:shadow-elevated transition-all flex flex-col group/card hover:-translate-y-2 duration-300"
+              >
+                <div className="aspect-[16/9] overflow-hidden bg-muted relative">
+                  <img
+                    src={p.image_url}
+                    alt={p.name}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700"
+                  />
+                  <span className="absolute top-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-leaf text-primary-foreground text-xs font-semibold">
+                    <Leaf className="h-3 w-3" /> Eco-Friendly
+                  </span>
                 </div>
-                <div className="mt-4 text-xs uppercase tracking-widest text-primary font-semibold">Material: Kraft / Butter Paper</div>
-              </div>
-            </motion.article>
-          ))}
-        </Stagger>
-      </div>
+                <div className="p-5 flex flex-col flex-grow">
+                  <h3 className="font-display text-lg font-semibold">{p.name}</h3>
+                  <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground flex-grow">
+                    {p.features && p.features.length > 0 ? (
+                      p.features.map((f: string, i: number) => (
+                        <li key={i} className="flex gap-2">
+                          <span className="text-primary">●</span>
+                          {f}
+                        </li>
+                      ))
+                    ) : (
+                      <li>No specific features listed.</li>
+                    )}
+                  </ul>
+                  <div className="mt-4 flex items-center gap-2 text-xs text-foreground/70">
+                    <Ruler className="h-3.5 w-3.5 text-primary" />
+                    <span>Sizes: {p.sizes}</span>
+                  </div>
+                  <div className="mt-4 text-xs uppercase tracking-widest text-primary font-semibold">
+                    Material: {p.material}
+                  </div>
+                  <div className="mt-5 pt-4 border-t border-border/50 mt-auto">
+                    <Link
+                      href={`/products/${p.slug}`}
+                      className="inline-flex w-full items-center justify-center rounded-full bg-primary/10 px-4 py-2.5 text-sm font-semibold text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
+                    >
+                      View Product
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="container-px max-w-7xl mx-auto">
+          <Stagger className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {products.map((p: BackendProduct) => (
+              <motion.article
+                key={p.id || p.name}
+                variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}
+                whileHover={{ y: -6 }}
+                className="group glass rounded-3xl overflow-hidden shadow-soft hover:shadow-elevated transition-all flex flex-col"
+              >
+                <div className="aspect-[4/3] overflow-hidden bg-muted relative">
+                  <img
+                    src={p.image_url}
+                    alt={p.name}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <span className="absolute top-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-leaf text-primary-foreground text-xs font-semibold">
+                    <Leaf className="h-3 w-3" /> Eco-Friendly
+                  </span>
+                </div>
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="font-display text-xl font-semibold">{p.name}</h3>
+                  <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground flex-grow">
+                    {p.features && p.features.length > 0 ? (
+                      p.features.map((f: string, i: number) => (
+                        <li key={i} className="flex gap-2">
+                          <span className="text-primary">●</span>
+                          {f}
+                        </li>
+                      ))
+                    ) : (
+                      <li>No specific features listed.</li>
+                    )}
+                  </ul>
+                  <div className="mt-4 flex items-center gap-2 text-xs text-foreground/70">
+                    <Ruler className="h-3.5 w-3.5 text-primary" />
+                    <span>Sizes: {p.sizes}</span>
+                  </div>
+                  <div className="mt-4 text-xs uppercase tracking-widest text-primary font-semibold">
+                    Material: {p.material}
+                  </div>
+                  <div className="mt-5 pt-4 border-t border-border/50 mt-auto">
+                    <Link
+                      href={`/products/${p.slug}`}
+                      className="inline-flex w-full items-center justify-center rounded-full bg-primary/10 px-4 py-2.5 text-sm font-semibold text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
+                    >
+                      View Product
+                    </Link>
+                  </div>
+                </div>
+              </motion.article>
+            ))}
+          </Stagger>
+        </div>
+      )}
     </section>
   );
 }
