@@ -2,7 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, Settings, Instagram, Youtube, Facebook, MessageCircle, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  CheckCircle2,
+  Settings,
+  Instagram,
+  Youtube,
+  Facebook,
+  MessageCircle,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 
 interface ProductDetailsProps {
   overview: string;
@@ -69,29 +78,29 @@ export function ProductDetails({ overview, specs, advantages, images }: ProductD
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
               </AnimatePresence>
-              
+
               {/* Carousel Controls */}
               <div className="absolute inset-0 flex items-center justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <button 
-                  onClick={() => setImageIdx(i => (i === 0 ? 1 : 0))}
+                <button
+                  onClick={() => setImageIdx((i) => (i === 0 ? 1 : 0))}
                   className="h-10 w-10 rounded-full bg-background/80 backdrop-blur text-foreground flex items-center justify-center shadow-lg hover:bg-background hover:scale-110 transition-all"
                 >
                   <ChevronLeft className="h-5 w-5" />
                 </button>
-                <button 
-                  onClick={() => setImageIdx(i => (i === 0 ? 1 : 0))}
+                <button
+                  onClick={() => setImageIdx((i) => (i === 0 ? 1 : 0))}
                   className="h-10 w-10 rounded-full bg-background/80 backdrop-blur text-foreground flex items-center justify-center shadow-lg hover:bg-background hover:scale-110 transition-all"
                 >
                   <ChevronRight className="h-5 w-5" />
                 </button>
               </div>
-              
+
               {/* Carousel Indicators */}
               <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
                 {[gallery.result, gallery.stage].map((_, idx) => (
-                  <div 
-                    key={idx} 
-                    className={`h-2 rounded-full transition-all duration-300 ${imageIdx === idx ? 'w-6 bg-white' : 'w-2 bg-white/50'}`}
+                  <div
+                    key={idx}
+                    className={`h-2 rounded-full transition-all duration-300 ${imageIdx === idx ? "w-6 bg-white" : "w-2 bg-white/50"}`}
                   />
                 ))}
               </div>
@@ -121,7 +130,9 @@ export function ProductDetails({ overview, specs, advantages, images }: ProductD
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-5">
                 {specs.map((spec, idx) => (
                   <div key={idx}>
-                    <div className="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">{spec.label}</div>
+                    <div className="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">
+                      {spec.label}
+                    </div>
                     <div className="font-semibold text-foreground text-sm">{spec.value}</div>
                   </div>
                 ))}

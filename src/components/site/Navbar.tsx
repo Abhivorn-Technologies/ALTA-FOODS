@@ -33,14 +33,15 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-7xl z-50 transition-all duration-300 rounded-2xl md:rounded-full border ${scrolled
-        ? "bg-background/95 backdrop-blur-xl border-border shadow-elevated py-0.5"
-        : "bg-background/80 backdrop-blur-xl border-white/20 py-1 shadow-soft"
-        }`}
+      className={`fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-7xl z-50 transition-all duration-300 rounded-2xl md:rounded-full border ${
+        scrolled
+          ? "bg-background/95 backdrop-blur-xl border-border shadow-elevated py-0.5"
+          : "bg-background/80 backdrop-blur-xl border-white/20 py-1 shadow-soft"
+      }`}
     >
       <div className="container-px mx-auto">
         <nav className="flex items-center justify-between transition-all">
-          <Link href="/" className="flex items-center group">
+          <Link href="/" prefetch={false} className="flex items-center group">
             <img
               src="/images/logo.png"
               alt="ALTA FOODS logo"
@@ -55,6 +56,7 @@ export function Navbar() {
                 <li key={l.to}>
                   <Link
                     href={l.to}
+                    prefetch={false}
                     className={`relative px-3 py-2 text-sm font-medium transition-colors flex items-center gap-1 ${isActive ? "text-primary" : "text-foreground/80 hover:text-primary"}`}
                   >
                     {l.label}
@@ -73,10 +75,11 @@ export function Navbar() {
           <div className="hidden lg:flex">
             <Link
               href="/contact"
+              prefetch={false}
               className="group relative overflow-hidden inline-flex items-center gap-2 rounded-full bg-leaf text-primary-foreground px-6 py-2.5 text-sm font-semibold shadow-soft hover:shadow-[0_0_20px_rgba(34,197,94,0.4)] hover:-translate-y-0.5 transition-all duration-300"
             >
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-              <Leaf className="h-4 w-4 relative z-10" /> 
+              <Leaf className="h-4 w-4 relative z-10" />
               <span className="relative z-10">Get a Quote</span>
             </Link>
           </div>
@@ -106,6 +109,7 @@ export function Navbar() {
                     <li key={l.to}>
                       <Link
                         href={l.to}
+                        prefetch={false}
                         className={`block rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-accent ${isActive ? "bg-accent text-primary" : ""}`}
                       >
                         {l.label}
@@ -115,6 +119,7 @@ export function Navbar() {
                 })}
                 <Link
                   href="/contact"
+                  prefetch={false}
                   className="mt-2 inline-flex justify-center items-center gap-2 rounded-full bg-leaf text-primary-foreground px-5 py-2.5 text-sm font-semibold"
                 >
                   Get a Quote

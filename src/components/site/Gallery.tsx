@@ -24,14 +24,34 @@ import sustainability from "@/assets/sustainability.jpg";
 
 const galleryData = [
   { src: g1, title: "Paper Roll Sourcing", category: "Factory & Process", tags: ["Raw Material"] },
-  { src: mango, title: "Mango Paper Covers", category: "Products", tags: ["Fruit Cover", "Premium"] },
-  { src: heroOrchard, title: "Partner Farms", category: "Farm & Sustainability", tags: ["Orchard"] },
+  {
+    src: mango,
+    title: "Mango Paper Covers",
+    category: "Products",
+    tags: ["Fruit Cover", "Premium"],
+  },
+  {
+    src: heroOrchard,
+    title: "Partner Farms",
+    category: "Farm & Sustainability",
+    tags: ["Orchard"],
+  },
   { src: g2, title: "Manufacturing Process", category: "Factory & Process", tags: ["Production"] },
   { src: pom, title: "Pomegranate Bags", category: "Products", tags: ["Fruit Cover"] },
-  { src: sustainability, title: "Eco-friendly Materials", category: "Farm & Sustainability", tags: ["Recyclable"] },
+  {
+    src: sustainability,
+    title: "Eco-friendly Materials",
+    category: "Farm & Sustainability",
+    tags: ["Recyclable"],
+  },
   { src: g3, title: "Quality Check", category: "Factory & Process", tags: ["QA"] },
   { src: apple, title: "Apple Protection Bags", category: "Products", tags: ["Fruit Cover"] },
-  { src: heroOrchardVibrant, title: "Harvest Protection", category: "Farm & Sustainability", tags: ["Yield"] },
+  {
+    src: heroOrchardVibrant,
+    title: "Harvest Protection",
+    category: "Farm & Sustainability",
+    tags: ["Yield"],
+  },
   { src: g4, title: "Packaging Line", category: "Factory & Process", tags: ["Logistics"] },
   { src: guava, title: "Guava Covers", category: "Products", tags: ["Fruit Cover"] },
   { src: custom, title: "Custom Bags", category: "Products", tags: ["Custom Print"] },
@@ -121,12 +141,17 @@ export function Gallery({ showCategories = false, limit }: GalleryProps) {
                       <Tag className="h-3 w-3" /> {item.category}
                     </span>
                     {item.tags.map((tag) => (
-                      <span key={tag} className="px-2.5 py-1 bg-muted/80 rounded-md text-[10px] uppercase font-bold text-foreground/70 tracking-wider">
+                      <span
+                        key={tag}
+                        className="px-2.5 py-1 bg-muted/80 rounded-md text-[10px] uppercase font-bold text-foreground/70 tracking-wider"
+                      >
                         {tag}
                       </span>
                     ))}
                   </div>
-                  <h3 className="font-display font-semibold text-lg text-foreground mt-auto">{item.title}</h3>
+                  <h3 className="font-display font-semibold text-lg text-foreground mt-auto">
+                    {item.title}
+                  </h3>
                 </div>
               </motion.article>
             ))}

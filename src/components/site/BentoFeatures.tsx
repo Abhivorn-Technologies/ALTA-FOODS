@@ -66,7 +66,8 @@ export function BentoFeatures() {
           </Reveal>
           <Reveal delay={0.2}>
             <p className="mt-4 text-lg text-muted-foreground">
-              We don't just make bags. We craft premium packaging solutions that protect your product and elevate your brand.
+              We don't just make bags. We craft premium packaging solutions that protect your
+              product and elevate your brand.
             </p>
           </Reveal>
         </div>
@@ -80,15 +81,21 @@ export function BentoFeatures() {
             >
               {/* Decorative background glow for some cards */}
               <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-3xl transition-opacity group-hover:bg-white/20" />
-              
+
               <div className="relative z-10">
-                <div className={`mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm`}>
+                <div
+                  className={`mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm`}
+                >
                   <feature.icon className={`h-6 w-6 ${feature.iconColor}`} />
                 </div>
-                <h3 className={`text-2xl font-bold mb-2 ${feature.className.includes('bg-primary') ? 'text-white' : ''}`}>
+                <h3
+                  className={`text-2xl font-bold mb-2 ${feature.className.includes("bg-primary") ? "text-white" : ""}`}
+                >
                   {feature.title}
                 </h3>
-                <p className={`text-base leading-relaxed ${feature.className.includes('bg-primary') ? 'text-white/80' : 'text-muted-foreground'}`}>
+                <p
+                  className={`text-base leading-relaxed ${feature.className.includes("bg-primary") ? "text-white/80" : "text-muted-foreground"}`}
+                >
                   {feature.description}
                 </p>
               </div>
