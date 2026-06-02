@@ -4,7 +4,20 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Package, ChevronRight, CheckCircle2, Settings, ArrowLeft, Leaf, Ruler, ChevronLeft, Instagram, Youtube, Facebook, MessageCircle } from "lucide-react";
+import {
+  Package,
+  ChevronRight,
+  CheckCircle2,
+  Settings,
+  ArrowLeft,
+  Leaf,
+  Ruler,
+  ChevronLeft,
+  Instagram,
+  Youtube,
+  Facebook,
+  MessageCircle,
+} from "lucide-react";
 
 const PageHeader = dynamic(
   () => import("@/components/site/PageHeader").then((mod) => mod.PageHeader),
@@ -42,17 +55,19 @@ interface MenuItem {
   slug: string;
 }
 
-
-
 /* ─── Fallback Data ─── */
-const initialFruitsData: Record<string, {
-  overview: string;
-  advantages: string[];
-  stageImage: string;
-  resultImage: string;
-}> = {
+const initialFruitsData: Record<
+  string,
+  {
+    overview: string;
+    advantages: string[];
+    stageImage: string;
+    resultImage: string;
+  }
+> = {
   mango: {
-    overview: "ALTA FOODS offers premium mango protection bags with effective & timely delivery. Our mango protection bag is a specialized double-layer bag where the outer brown paper is 50-55 GSM and the inner black paper is 30-35 GSM. The standard size of the bag is 18cm X 30cm.\n\nThis bag is fully Waterproof, Moisture-proof, Breathable, and completely Bio-Degradable. It is sealed with integrated iron wire, which strongly resists wind.",
+    overview:
+      "ALTA FOODS offers premium mango protection bags with effective & timely delivery. Our mango protection bag is a specialized double-layer bag where the outer brown paper is 50-55 GSM and the inner black paper is 30-35 GSM. The standard size of the bag is 18cm X 30cm.\n\nThis bag is fully Waterproof, Moisture-proof, Breathable, and completely Bio-Degradable. It is sealed with integrated iron wire, which strongly resists wind.",
     advantages: [
       "The bag is sealed with iron wire, which strongly resists wind.",
       "Fruits can breathe inside & the paper is waterproof against rain.",
@@ -67,7 +82,8 @@ const initialFruitsData: Record<string, {
     resultImage: "/images/hero/mango.png",
   },
   apple: {
-    overview: "ALTA FOODS offers premium apple protection bags optimized at 15cm X 22cm. Fully Waterproof, Moisture-proof, Breathable, and Bio-Degradable with integrated iron wire sealing.",
+    overview:
+      "ALTA FOODS offers premium apple protection bags optimized at 15cm X 22cm. Fully Waterproof, Moisture-proof, Breathable, and Bio-Degradable with integrated iron wire sealing.",
     advantages: [
       "Sealed with iron wire for wind resistance.",
       "Waterproof & breathable paper.",
@@ -82,7 +98,8 @@ const initialFruitsData: Record<string, {
     resultImage: "/images/hero/apple.png",
   },
   banana: {
-    overview: "ALTA FOODS banana bunch covers are engineered for large-scale plantations. Made from specialized breathable, water-resistant paper (35-45 GSM) sized 85cm x 150cm to cover entire bunches.",
+    overview:
+      "ALTA FOODS banana bunch covers are engineered for large-scale plantations. Made from specialized breathable, water-resistant paper (35-45 GSM) sized 85cm x 150cm to cover entire bunches.",
     advantages: [
       "Protects bunches from sunburn and discoloration.",
       "Prevents moisture buildup and fungal diseases.",
@@ -97,7 +114,8 @@ const initialFruitsData: Record<string, {
     resultImage: "/images/hero/banana.png",
   },
   guava: {
-    overview: "ALTA FOODS guava protection bags are engineered to defend against fruit flies. Made with 35-45 GSM paper, sized 16cm X 22cm. Fully Waterproof, Breathable, and Bio-Degradable.",
+    overview:
+      "ALTA FOODS guava protection bags are engineered to defend against fruit flies. Made with 35-45 GSM paper, sized 16cm X 22cm. Fully Waterproof, Breathable, and Bio-Degradable.",
     advantages: [
       "Sealed with iron wire for wind resistance.",
       "Protects from fruit flies and borers.",
@@ -112,7 +130,8 @@ const initialFruitsData: Record<string, {
     resultImage: "/images/hero/guava.png",
   },
   pomegranate: {
-    overview: "ALTA FOODS pomegranate bags prevent fruit cracking. Sized 20cm X 25cm. Fully Waterproof, Moisture-proof, Breathable, and Bio-Degradable with iron wire sealing.",
+    overview:
+      "ALTA FOODS pomegranate bags prevent fruit cracking. Sized 20cm X 25cm. Fully Waterproof, Moisture-proof, Breathable, and Bio-Degradable with iron wire sealing.",
     advantages: [
       "Sealed with iron wire for wind resistance.",
       "Prevents fruit cracking from temperature changes.",
@@ -145,10 +164,23 @@ const parseBenefits = (str: string | undefined): string[] => {
   const t = str.trim();
   if (!t || t === "[]" || t === "null") return [];
   if (t.startsWith("[") && t.endsWith("]")) {
-    try { const p = JSON.parse(t); if (Array.isArray(p)) return p.map(String).filter(Boolean); } catch {}
+    try {
+      const p = JSON.parse(t);
+      if (Array.isArray(p)) return p.map(String).filter(Boolean);
+    } catch {
+      // Fall back if JSON parsing fails
+    }
   }
-  if (t.includes("\n")) return t.split("\n").map(s => s.trim()).filter(Boolean);
-  if (t.includes(",")) return t.split(",").map(s => s.trim()).filter(Boolean);
+  if (t.includes("\n"))
+    return t
+      .split("\n")
+      .map((s) => s.trim())
+      .filter(Boolean);
+  if (t.includes(","))
+    return t
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
   return [t];
 };
 
@@ -178,9 +210,17 @@ function ProductDetailPanel({ slug, onBack }: { slug: string; onBack: () => void
     setProduct(null);
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
     fetch(`${apiUrl}/api/products/${slug}/`)
-      .then((res) => { if (!res.ok) throw new Error("Not found"); return res.json(); })
-      .then((data) => { setProduct(data); setLoading(false); })
-      .catch(() => { setLoading(false); });
+      .then((res) => {
+        if (!res.ok) throw new Error("Not found");
+        return res.json();
+      })
+      .then((data) => {
+        setProduct(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
   }, [slug]);
 
   if (loading) {
@@ -204,13 +244,18 @@ function ProductDetailPanel({ slug, onBack }: { slug: string; onBack: () => void
   }
 
   const fallback = fruitKey ? initialFruitsData[fruitKey] : null;
-  const name = product?.name || slug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
-  const overview = product?.description || fallback?.overview || "Premium protection bags engineered for this fruit.";
+  const name = product?.name || slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  const overview =
+    product?.description ||
+    fallback?.overview ||
+    "Premium protection bags engineered for this fruit.";
   const backendBenefits = parseBenefits(product?.benefits);
-  const advantages = backendBenefits.length > 0
-    ? backendBenefits
-    : product?.features?.length ? product.features
-    : fallback?.advantages || defaultAdvantages;
+  const advantages =
+    backendBenefits.length > 0
+      ? backendBenefits
+      : product?.features?.length
+        ? product.features
+        : fallback?.advantages || defaultAdvantages;
 
   const specs = [
     { label: "Color", value: product?.color || "Brown / White" },
@@ -263,29 +308,29 @@ function ProductDetailPanel({ slug, onBack }: { slug: string; onBack: () => void
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
           </AnimatePresence>
-          
+
           {/* Carousel Controls */}
           <div className="absolute inset-0 flex items-center justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <button 
-              onClick={() => setImageIdx(i => (i === 0 ? 1 : 0))}
+            <button
+              onClick={() => setImageIdx((i) => (i === 0 ? 1 : 0))}
               className="h-10 w-10 rounded-full bg-background/80 backdrop-blur text-foreground flex items-center justify-center shadow-lg hover:bg-background hover:scale-110 transition-all"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
-            <button 
-              onClick={() => setImageIdx(i => (i === 0 ? 1 : 0))}
+            <button
+              onClick={() => setImageIdx((i) => (i === 0 ? 1 : 0))}
               className="h-10 w-10 rounded-full bg-background/80 backdrop-blur text-foreground flex items-center justify-center shadow-lg hover:bg-background hover:scale-110 transition-all"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
           </div>
-          
+
           {/* Carousel Indicators */}
           <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
             {[resultImg, stageImg].map((_, idx) => (
-              <div 
-                key={idx} 
-                className={`h-2 rounded-full transition-all duration-300 ${imageIdx === idx ? 'w-6 bg-white' : 'w-2 bg-white/50'}`}
+              <div
+                key={idx}
+                className={`h-2 rounded-full transition-all duration-300 ${imageIdx === idx ? "w-6 bg-white" : "w-2 bg-white/50"}`}
               />
             ))}
           </div>
@@ -306,7 +351,9 @@ function ProductDetailPanel({ slug, onBack }: { slug: string; onBack: () => void
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-5">
           {specs.map((spec, idx) => (
             <div key={idx}>
-              <div className="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">{spec.label}</div>
+              <div className="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">
+                {spec.label}
+              </div>
               <div className="font-semibold text-foreground text-sm">{spec.value}</div>
             </div>
           ))}
@@ -333,7 +380,7 @@ function ProductDetailPanel({ slug, onBack }: { slug: string; onBack: () => void
           ))}
         </div>
       </div>
-      
+
       {/* Social Media */}
       <div className="mt-16 pt-12 border-t border-border/50">
         <h3 className="text-xl md:text-2xl font-bold font-display mb-6 text-foreground text-center">
@@ -368,9 +415,7 @@ function ProductDetailPanel({ slug, onBack }: { slug: string; onBack: () => void
               </div>
               <div className="text-left">
                 <div className="font-semibold text-sm">{social.name}</div>
-                <div className="text-[10px] uppercase tracking-wider opacity-70">
-                  Follow Us
-                </div>
+                <div className="text-[10px] uppercase tracking-wider opacity-70">Follow Us</div>
               </div>
             </a>
           ))}
@@ -381,7 +426,13 @@ function ProductDetailPanel({ slug, onBack }: { slug: string; onBack: () => void
 }
 
 /* ─── All Products Grid (default right panel) ─── */
-function AllProductsGrid({ products, onSelect }: { products: BackendProduct[]; onSelect: (slug: string) => void }) {
+function AllProductsGrid({
+  products,
+  onSelect,
+}: {
+  products: BackendProduct[];
+  onSelect: (slug: string) => void;
+}) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -416,7 +467,8 @@ function AllProductsGrid({ products, onSelect }: { products: BackendProduct[]; o
               <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground flex-grow">
                 {p.features?.slice(0, 3).map((f, i) => (
                   <li key={i} className="flex gap-2">
-                    <span className="text-primary">●</span>{f}
+                    <span className="text-primary">●</span>
+                    {f}
                   </li>
                 ))}
               </ul>
@@ -447,8 +499,12 @@ export default function Page() {
   useEffect(() => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
     Promise.all([
-      fetch(`${apiUrl}/api/products/menu/`).then(r => r.json()).catch(() => []),
-      fetch(`${apiUrl}/api/products/`).then(r => r.json()).catch(() => []),
+      fetch(`${apiUrl}/api/products/menu/`)
+        .then((r) => r.json())
+        .catch(() => []),
+      fetch(`${apiUrl}/api/products/`)
+        .then((r) => r.json())
+        .catch(() => []),
     ]).then(([menu, products]) => {
       if (Array.isArray(menu)) setMenuItems(menu);
       if (Array.isArray(products)) setAllProducts(products);
@@ -520,32 +576,33 @@ export default function Page() {
                   slug={selectedSlug}
                   onBack={() => setSelectedSlug(null)}
                 />
-              ) : (
-                loading ? (
-                  <div className="animate-pulse">
-                    <div className="h-10 w-48 bg-muted rounded-xl mb-8"></div>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {[1, 2, 3, 4, 5, 6].map((i) => (
-                        <div key={i} className="glass rounded-3xl overflow-hidden shadow-soft flex flex-col h-[350px]">
-                          <div className="aspect-[4/3] bg-muted"></div>
-                          <div className="p-5 flex flex-col flex-grow gap-4">
-                            <div className="h-6 w-2/3 bg-muted rounded-md"></div>
-                            <div className="space-y-2">
-                              <div className="h-4 w-full bg-muted rounded"></div>
-                              <div className="h-4 w-5/6 bg-muted rounded"></div>
-                            </div>
+              ) : loading ? (
+                <div className="animate-pulse">
+                  <div className="h-10 w-48 bg-muted rounded-xl mb-8"></div>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {[1, 2, 3, 4, 5, 6].map((i) => (
+                      <div
+                        key={i}
+                        className="glass rounded-3xl overflow-hidden shadow-soft flex flex-col h-[350px]"
+                      >
+                        <div className="aspect-[4/3] bg-muted"></div>
+                        <div className="p-5 flex flex-col flex-grow gap-4">
+                          <div className="h-6 w-2/3 bg-muted rounded-md"></div>
+                          <div className="space-y-2">
+                            <div className="h-4 w-full bg-muted rounded"></div>
+                            <div className="h-4 w-5/6 bg-muted rounded"></div>
                           </div>
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
                   </div>
-                ) : (
-                  <AllProductsGrid
-                    key="all"
-                    products={allProducts}
-                    onSelect={(slug) => setSelectedSlug(slug)}
-                  />
-                )
+                </div>
+              ) : (
+                <AllProductsGrid
+                  key="all"
+                  products={allProducts}
+                  onSelect={(slug) => setSelectedSlug(slug)}
+                />
               )}
             </AnimatePresence>
           </div>

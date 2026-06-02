@@ -10,28 +10,32 @@ const showcaseItems = [
   {
     id: "01",
     title: "Unmatched Durability",
-    description: "Crafted from multiple layers of high-grade kraft paper, our bags can withstand extreme conditions without tearing. They ensure your product arrives safely, every time.",
+    description:
+      "Crafted from multiple layers of high-grade kraft paper, our bags can withstand extreme conditions without tearing. They ensure your product arrives safely, every time.",
   },
   {
     id: "02",
     title: "Breathable & Protective",
-    description: "Our proprietary material blend allows agricultural products to breathe, preventing moisture buildup while keeping pests and UV rays out.",
+    description:
+      "Our proprietary material blend allows agricultural products to breathe, preventing moisture buildup while keeping pests and UV rays out.",
   },
   {
     id: "03",
     title: "Custom Tailored for You",
-    description: "From specific dimensions to vibrant, non-toxic brand printing, we customize every batch to match your precise requirements and brand identity.",
+    description:
+      "From specific dimensions to vibrant, non-toxic brand printing, we customize every batch to match your precise requirements and brand identity.",
   },
   {
     id: "04",
     title: "Eco-Conscious Core",
-    description: "Sustainability isn't an afterthought. Every bag is 100% biodegradable, recyclable, and sourced from responsibly managed forests.",
+    description:
+      "Sustainability isn't an afterthought. Every bag is 100% biodegradable, recyclable, and sourced from responsibly managed forests.",
   },
 ];
 
 export function StickyShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
@@ -45,10 +49,9 @@ export function StickyShowcase() {
     <section ref={containerRef} className="relative py-24 bg-background">
       <div className="container-px max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-start relative">
-          
           {/* Left Side: Sticky Image */}
           <div className="lg:w-1/2 w-full lg:sticky top-24 lg:h-[calc(100vh-8rem)] flex items-center justify-center overflow-hidden rounded-3xl">
-            <motion.div 
+            <motion.div
               style={{ opacity, scale }}
               className="relative w-full h-[60vh] lg:h-full rounded-3xl overflow-hidden shadow-2xl glass"
             >
@@ -78,16 +81,14 @@ export function StickyShowcase() {
                   </span>
                 </Reveal>
                 <Reveal delay={0.1}>
-                  <h3 className="text-3xl md:text-5xl font-bold mb-6 mt-4">
-                    {item.title}
-                  </h3>
+                  <h3 className="text-3xl md:text-5xl font-bold mb-6 mt-4">{item.title}</h3>
                 </Reveal>
                 <Reveal delay={0.2}>
                   <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                     {item.description}
                   </p>
                 </Reveal>
-                
+
                 {/* Decorative separator line */}
                 {index !== showcaseItems.length - 1 && (
                   <Reveal delay={0.3}>
@@ -97,7 +98,6 @@ export function StickyShowcase() {
               </div>
             ))}
           </div>
-
         </div>
       </div>
     </section>

@@ -104,8 +104,6 @@ export function Hero() {
             Contact Us
           </Link>
         </div>
-
-
       </div>
     </section>
   );

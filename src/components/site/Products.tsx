@@ -16,7 +16,13 @@ interface BackendProduct {
   material: string;
 }
 
-export function Products({ layout = "grid", hideHeader = false }: { layout?: "grid" | "marquee"; hideHeader?: boolean }) {
+export function Products({
+  layout = "grid",
+  hideHeader = false,
+}: {
+  layout?: "grid" | "marquee";
+  hideHeader?: boolean;
+}) {
   // 1. Create a state to store our dynamic products
   const [products, setProducts] = useState<BackendProduct[]>([]);
   const [loading, setLoading] = useState(true);
@@ -25,19 +31,30 @@ export function Products({ layout = "grid", hideHeader = false }: { layout?: "gr
   useEffect(() => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
     fetch(`${apiUrl}/api/products/`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then((data) => {
-        setProducts(data);
+        if (Array.isArray(data)) {
+          setProducts(data);
+        } else {
+          console.warn("API response is not an array:", data);
+          setProducts([]);
+        }
         setLoading(false);
       })
       .catch((error) => {
         console.warn("Error fetching products:", error.message || error);
+        setProducts([]);
         setLoading(false);
       });
   }, []);
 
   return (
-    <section className={`${hideHeader ? 'py-0' : 'py-24'} relative overflow-hidden`}>
+    <section className={`${hideHeader ? "py-0" : "py-24"} relative overflow-hidden`}>
       {!hideHeader && (
         <div className="container-px max-w-7xl mx-auto">
           <div className="text-center max-w-2xl mx-auto">
@@ -67,54 +84,56 @@ export function Products({ layout = "grid", hideHeader = false }: { layout?: "gr
       ) : layout === "marquee" ? (
         <div className="mt-12 overflow-hidden flex relative w-full group py-8">
           <div className="flex gap-6 animate-marquee w-max hover:[animation-play-state:paused] pl-6">
-            {[...products, ...products, ...products, ...products].map((p: BackendProduct, idx: number) => (
-              <article
-                key={`${p.id}-${idx}`}
-                className="w-[280px] sm:w-[340px] shrink-0 glass rounded-3xl overflow-hidden shadow-soft hover:shadow-elevated transition-all flex flex-col group/card hover:-translate-y-2 duration-300"
-              >
-                <div className="aspect-[16/9] overflow-hidden bg-muted relative">
-                  <img
-                    src={p.image_url}
-                    alt={p.name}
-                    loading="lazy"
-                    className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700"
-                  />
-                  <span className="absolute top-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-leaf text-primary-foreground text-xs font-semibold">
-                    <Leaf className="h-3 w-3" /> Eco-Friendly
-                  </span>
-                </div>
-                <div className="p-5 flex flex-col flex-grow">
-                  <h3 className="font-display text-lg font-semibold">{p.name}</h3>
-                  <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground flex-grow">
-                    {p.features && p.features.length > 0 ? (
-                      p.features.map((f: string, i: number) => (
-                        <li key={i} className="flex gap-2">
-                          <span className="text-primary">●</span>
-                          {f}
-                        </li>
-                      ))
-                    ) : (
-                      <li>No specific features listed.</li>
-                    )}
-                  </ul>
-                  <div className="mt-4 flex items-center gap-2 text-xs text-foreground/70">
-                    <Ruler className="h-3.5 w-3.5 text-primary" />
-                    <span>Sizes: {p.sizes}</span>
+            {[...products, ...products, ...products, ...products].map(
+              (p: BackendProduct, idx: number) => (
+                <article
+                  key={`${p.id}-${idx}`}
+                  className="w-[280px] sm:w-[340px] shrink-0 glass rounded-3xl overflow-hidden shadow-soft hover:shadow-elevated transition-all flex flex-col group/card hover:-translate-y-2 duration-300"
+                >
+                  <div className="aspect-[16/9] overflow-hidden bg-muted relative">
+                    <img
+                      src={p.image_url}
+                      alt={p.name}
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700"
+                    />
+                    <span className="absolute top-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-leaf text-primary-foreground text-xs font-semibold">
+                      <Leaf className="h-3 w-3" /> Eco-Friendly
+                    </span>
                   </div>
-                  <div className="mt-4 text-xs uppercase tracking-widest text-primary font-semibold">
-                    Material: {p.material}
+                  <div className="p-5 flex flex-col flex-grow">
+                    <h3 className="font-display text-lg font-semibold">{p.name}</h3>
+                    <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground flex-grow">
+                      {p.features && p.features.length > 0 ? (
+                        p.features.map((f: string, i: number) => (
+                          <li key={i} className="flex gap-2">
+                            <span className="text-primary">●</span>
+                            {f}
+                          </li>
+                        ))
+                      ) : (
+                        <li>No specific features listed.</li>
+                      )}
+                    </ul>
+                    <div className="mt-4 flex items-center gap-2 text-xs text-foreground/70">
+                      <Ruler className="h-3.5 w-3.5 text-primary" />
+                      <span>Sizes: {p.sizes}</span>
+                    </div>
+                    <div className="mt-4 text-xs uppercase tracking-widest text-primary font-semibold">
+                      Material: {p.material}
+                    </div>
+                    <div className="mt-5 pt-4 border-t border-border/50 mt-auto">
+                      <Link
+                        href={`/products/${p.slug}`}
+                        className="inline-flex w-full items-center justify-center rounded-full bg-primary/10 px-4 py-2.5 text-sm font-semibold text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
+                      >
+                        View Product
+                      </Link>
+                    </div>
                   </div>
-                  <div className="mt-5 pt-4 border-t border-border/50 mt-auto">
-                    <Link
-                      href={`/products/${p.slug}`}
-                      className="inline-flex w-full items-center justify-center rounded-full bg-primary/10 px-4 py-2.5 text-sm font-semibold text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
-                    >
-                      View Product
-                    </Link>
-                  </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              ),
+            )}
           </div>
         </div>
       ) : (
